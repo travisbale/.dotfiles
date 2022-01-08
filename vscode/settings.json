@@ -1,0 +1,287 @@
+{
+    "atomKeymap.promptV3Features": true,
+    "editor.renderLineHighlight": "all",
+    "editor.renderWhitespace": "boundary",
+    "editor.fontSize": 13,
+    "editor.fontLigatures": true,
+    "editor.suggestSelection": "first",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.rulers": [
+        80,
+        120
+    ],
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "diffEditor.renderSideBySide": false,
+    "explorer.confirmDelete": false,
+    "diffEditor.ignoreTrimWhitespace": true,
+    "gitlens.blame.ignoreWhitespace": true,
+    "git.allowForcePush": true,
+    "breadcrumbs.enabled": false,
+    "vetur.validation.template": false,
+    "files.exclude": {
+        "**/.git": false,
+        "**/.venv": true,
+        "**/.eggs": true,
+        "**/*.egg-info": true,
+        "**/__pycache__": true
+    },
+    "workbench.iconTheme": "material-icon-theme",
+    "workbench.editor.closeOnFileDelete": true,
+    "workbench.editor.tabSizing": "shrink",
+    "workbench.editor.tabCloseButton": "off",
+    "workbench.colorTheme": "One Dark Pro",
+    "workbench.colorCustomizations": {
+        "activityBar.background": "#13151a",
+        "activityBar.activeBorder": "#b11bdf",
+        "activityBar.activeBackground": "#b11bdf4b",
+        "editor.background": "#1F2228",
+        "editor.lineHighlightBackground": "#24272e",
+        "titleBar.activeBackground": "#13151a",
+        "editorGroupHeader.tabsBackground": "#191b20",
+        "tab.activeBackground": "#1F2228",
+        "tab.inactiveBackground": "#13151a",
+        "diffEditor.insertedTextBackground": "#20692586",
+        "diffEditor.removedTextBackground": "#852b2986",
+        "sideBar.background": "#191b20",
+        "terminal.background": "#22252C",
+        "panelSectionHeader.background": "#ff0000",
+        "panelTitle.activeBorder": "#b11bdf"
+    },
+    "editor.tokenColorCustomizations": {
+        "variables": "#abb2bf",
+        "comments": "#4d535e",
+        "textMateRules": [
+            {
+                "scope": "keyword.operator.assignment",
+                "settings": {
+                    "foreground": "#abb2bf"
+                }
+            },
+            {
+                "scope": "keyword.operator.logical",
+                "settings": {
+                    "foreground": "#abb2bf"
+                }
+            },
+            {
+                "scope": "keyword.operator.arithmetic",
+                "settings": {
+                    "foreground": "#abb2bf"
+                }
+            },
+            {
+                "scope": "keyword.operator.comparison",
+                "settings": {
+                    "foreground": "#abb2bf"
+                }
+            },
+            {
+                "scope": "keyword.operator.relational",
+                "settings": {
+                    "foreground": "#abb2bf"
+                }
+            },
+            {
+                "scope": "keyword.control.import.python",
+                "settings": {
+                    "fontStyle": ""
+                }
+            },
+            {
+                "scope": "keyword.control.flow.python",
+                "settings": {
+                    "fontStyle": ""
+                }
+            },
+            {
+                "scope": "meta.object-literal.key",
+                "settings": {
+                    "foreground": "#abb2bf"
+                }
+            },
+            {
+                "scope": "punctuation.definition.comment",
+                "settings": {
+                    "foreground": "#4d535e"
+                }
+            },
+            {
+                "scope": "support.variable.property",
+                "settings": {
+                    "foreground": "#56b6c2"
+                }
+            },
+            {
+                "scope": "variable.language.this",
+                "settings": {
+                    "foreground": "#e06c75"
+                }
+            },
+            {
+                "scope": "variable.other.readwrite",
+                "settings": {
+                    "foreground": "#abb2bf"
+                }
+            },
+            {
+                "scope": "variable.other.constant",
+                "settings": {
+                    "foreground": "#abb2bf"
+                }
+            },
+            {
+                "scope": "variable.parameter",
+                "settings": {
+                    "fontStyle": ""
+                }
+            },
+            {
+                "scope": "entity.name.variable.local.cs",
+                "settings": {
+                    "foreground": "#abb2bf"
+                }
+            }
+        ]
+    },
+    "editor.codeLens": true,
+    "files.simpleDialog.enable": true,
+    "workbench.tree.indent": 12,
+    "workbench.tree.renderIndentGuides": "always",
+    "editor.occurrencesHighlight": false,
+    "editor.minimap.enabled": false,
+    "workbench.editor.highlightModifiedTabs": true,
+    "cSpell.userWords": [
+        "ampq",
+        "amqp",
+        "bootloader",
+        "Cors",
+        "csrf",
+        "database",
+        "datetime",
+        "dbname",
+        "deserialization",
+        "deserializes",
+        "dotenv",
+        "dpage",
+        "dtype",
+        "entrypoint",
+        "fourball",
+        "fourball matches",
+        "game",
+        "getenv",
+        "gitlab",
+        "gmail",
+        "gobuster",
+        "gorm",
+        "grpc",
+        "gunicorn",
+        "hashcat",
+        "hdcp",
+        "idtr",
+        "inet",
+        "journaling",
+        "jsonify",
+        "koho",
+        "Kubernetes",
+        "leaderboard",
+        "luxon",
+        "matches",
+        "metasploit",
+        "michaels",
+        "milnes",
+        "msfvenom",
+        "ndimage",
+        "nmap",
+        "noindex",
+        "noreply",
+        "numpy",
+        "ondelete",
+        "opcua",
+        "opensans",
+        "participations",
+        "pbkdf",
+        "pgadmin",
+        "pgsql",
+        "postcss",
+        "postgres",
+        "postgresql",
+        "pyplot",
+        "pytest",
+        "rabbitmq",
+        "raleway",
+        "roboto",
+        "rossmere",
+        "rsplit",
+        "schrute",
+        "scipy",
+        "seclists",
+        "semibold",
+        "serializable",
+        "sklearn",
+        "sqlalchemy",
+        "sqlite",
+        "streadway",
+        "structs",
+        "tailwindcss",
+        "todo",
+        "todos",
+        "unsanitized",
+        "Untrust",
+        "Untrusted",
+        "uri",
+        "vite",
+        "vuetify",
+        "vuex",
+        "webp",
+        "werkzeug",
+        "wordlist",
+        "xsrf"
+    ],
+    "explorer.confirmDragAndDrop": false,
+    "editor.selectionHighlight": false,
+    "sqltools.useNodeRuntime": true,
+    "explorer.autoReveal": false,
+    "editor.fontFamily": "'Consolas'",
+    "css.validate": false,
+    "highlight-matching-tag.styles": {
+        "opening": {
+            "name": {
+                "highlight": "#444"
+            }
+        }
+    },
+    "javascript.updateImportsOnFileMove.enabled": "always",
+    "extensions.ignoreRecommendations": false,
+    "python.languageServer": "Pylance",
+    "window.zoomLevel": 0,
+    "python.showStartPage": false,
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "terminal.integrated.fontFamily": "consolas",
+    "python.autoComplete.addBrackets": true,
+    "python.analysis.completeFunctionParens": true,
+    "python.globalModuleInstallation": true,
+    "go.useLanguageServer": true,
+    "workbench.editorAssociations": {
+        "*.ipynb": "jupyter-notebook"
+    },
+    "cSpell.language": "en,en-US",
+    "go.toolsManagement.autoUpdate": true,
+    "git.confirmSync": false,
+    "pasteImage.path": "${currentFileDir}/images",
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    },
+    "workbench.editor.untitled.hint": "hidden",
+    "redhat.telemetry.enabled": false,
+    "docker.showStartPage": false,
+    "notebook.cellToolbarLocation": {
+        "default": "right",
+        "jupyter-notebook": "left"
+    },
+    "workbench.startupEditor": "none",
+}
