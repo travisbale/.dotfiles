@@ -1,0 +1,24 @@
+[user]
+	email = travis.bale@gmail.com
+	name = Travis Bale
+[core]
+	editor = vim
+	autocrlf = input
+[help]
+	autocorrect = -1
+[rebase]
+	autosquash = true
+[alias]
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	force = push --force-with-lease
+	amend = commit --amend --no-edit
+	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
+	sign = commit -S --amend --no-edit
+	graph = log --graph --pretty=oneline
+[commit]
+	gpgsign = true
+[pull]
+	rebase = false
+[url "ssh://git@gitlabinternal.litmusloop.com/"]
+	insteadOf = https://gitlabinternal.litmusloop.com/
