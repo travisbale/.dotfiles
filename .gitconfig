@@ -2,7 +2,7 @@
 	email = travis.bale@gmail.com
 	name = Travis Bale
 [core]
-	editor = vim
+	editor = nvim
 	autocrlf = input
 [help]
 	autocorrect = -1

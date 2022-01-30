@@ -1,4 +1,4 @@
-" Install vim plugin manager
+" Instal vim plugin manager
 let need_to_install_plugins = 0
 if empty(glob('~/.local/share/nvim/autoload/plug.vim'))
     silent !curl -fLo ~/.local/share/nvim/autoload/plug.vim --create-dirs
@@ -63,6 +63,7 @@ if (has("autocmd") && !has("gui_running"))
     autocmd!
     let s:white = { "gui": "#ECEFF4", "cterm": "145", "cterm16": "7" }
     autocmd ColorScheme * call onedark#set_highlight("Normal", { "fg": s:white }) " `bg` will not be styled since there is no `bg` setting
+    autocmd ColorScheme * call onedark#set_highlight("Identifier", { "fg": s:white })
   augroup END
 endif
 
@@ -88,7 +89,7 @@ set softtabstop=4
 set expandtab
 set noshiftround
 set smartindent
-set listchars=tab:→\ ,trail:•,lead:·,nbsp:␣,multispace:·
+set listchars=tab:→\ ,trail:·,lead:·,nbsp:␣,multispace:·
 set list
 
 " Allow hidden buffers

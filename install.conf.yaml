@@ -7,7 +7,8 @@
 - link:
     ~/.gitconfig: .gitconfig
     ~/.zshrc: .zshrc
-    ~/.tmux.conf: .tmux.conf
+    ~/.tmux.conf: tmux/.tmux.conf
     ~/.config/Code/User/settings.json: vscode/settings.json
     ~/.vimrc: .vimrc
     ~/.config/nvim/init.vim: nvim/init.vim
+    ~/.tmux/themes/onedark.tmux: tmux/onedark.tmux
