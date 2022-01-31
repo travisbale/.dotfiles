@@ -37,9 +37,20 @@ Plug 'nvim-telescope/telescope.nvim'
 " Neovim language things
 Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
 
 " Nicer LSP UI
 Plug 'glepnir/lspsaga.nvim'
+
+" Fuzzy finder
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() }}
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -107,7 +118,34 @@ let NERDTreeShowHidden=1
 " Close NERDTree if it is the last thing open
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-nnoremap <Leader>f :NERDTreeToggle<CR>
-nnoremap <Leader>v :NERDTreeFind<CR>
+nnoremap <Leader>T :NERDTreeToggle<CR>
+nnoremap <Leader>t :NERDTreeFind<CR>
 
 nnoremap <Leader><space> :noh<CR>
+
+" Language Sever Configuration
+luafile ~/.vim/lsp_config.lua
+
+sign define LspDiagnosticsSignError text=🔴
+sign define LspDiagnosticsSignWarning text=🟠
+sign define LspDiagnosticsSignInformation text=🔵
+sign define LspDiagnosticsSignHint text=🟢
+
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> ge <cmd>lua vim.lsp.diagnostic.set_loclist()<CR>
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <leader>f <cmd>lua vim.lsp.buf.formatting()<CR>
+nnoremap <silent> <leader>rn <cmd>lua vim.lsp.buf.rename()<CR>
+
+nnoremap <silent> <leader>a <cmd>lua vim.lsp.buf.code_action()<CR>
+xmap <silent> <leader>a <cmd>lua vim.lsp.buf.range_code_action()<CR>
+
+" Fuzzy Finder Configuration
+nnoremap <silent> <C-p> :Files<CR>
+nnoremap <silent> <C-b> :Buffers<CR>
+
+" Autocomplete configuration
+set completeopt=menu,menuone,noselect

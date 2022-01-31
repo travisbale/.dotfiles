@@ -6,9 +6,11 @@
 
 - link:
     ~/.gitconfig: .gitconfig
-    ~/.zshrc: .zshrc
+    ~/.zshrc: zsh/.zshrc
+    ~/.zshenv: zsh/.zshenv
     ~/.tmux.conf: tmux/.tmux.conf
-    ~/.config/Code/User/settings.json: vscode/settings.json
-    ~/.vimrc: .vimrc
-    ~/.config/nvim/init.vim: nvim/init.vim
     ~/.tmux/themes/onedark.tmux: tmux/onedark.tmux
+    ~/.config/Code/User/settings.json: vscode/settings.json
+    ~/.vimrc: vim/.vimrc
+    ~/.config/nvim/init.lua: nvim/init.lua
+    ~/.config/nvim/lua/config: nvim/config
