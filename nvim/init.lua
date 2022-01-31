@@ -7,4 +7,5 @@ require "config.keymaps"
 require "config.lsp"
 require "config.telescope"
 require "config.treesitter"
+require "config.lualine"
 

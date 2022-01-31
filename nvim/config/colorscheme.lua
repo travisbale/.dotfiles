@@ -1,11 +1,11 @@
 require('onedark').setup {
---    transparent = true,
+    --transparent = true,
     colors = {
         bg0 = '#1F2228',
         bg1 = '#24272E',
     },
     highlights = {
-        TSConstructor = { fmt = 'none'},
+        TSConstructor = { fmt = 'none' },
         TSParameter = { fg = '$fg' },
     },
 }

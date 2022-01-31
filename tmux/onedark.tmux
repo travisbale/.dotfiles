@@ -86,4 +86,4 @@ set "status-right" "#[fg=$onedark_white,bg=$onedark_black]${time_format}  ${d
 set "status-left" "#[fg=$onedark_black,bg=$onedark_green,bold] #S #{prefix_highlight}#[fg=$onedark_green,bg=$onedark_black]"
 
 set "window-status-format" "#[fg=$onedark_black,bg=$onedark_black]#[fg=$onedark_white,bg=$onedark_black] #I  #W #[fg=$onedark_black,bg=$onedark_black]"
-set "window-status-current-format" "#[fg=$onedark_black,bg=$onedark_cyan]#[fg=$onedark_black,bg=$onedark_cyan] #I  #W #[fg=$onedark_cyan,bg=$onedark_black]"
+set "window-status-current-format" "#[fg=$onedark_black,bg=$onedark_visual_grey]#[fg=$onedark_white,bg=$onedark_visual_grey] #I  #W #[fg=$onedark_visual_grey,bg=$onedark_black]"
