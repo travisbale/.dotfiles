@@ -39,19 +39,26 @@ packer.init {
 
 -- Install your plugins here
 return packer.startup(function(use)
+  -- Package Manager
   use "wbthomason/packer.nvim" -- Have packer manage itself
+
+  -- Default settings
   use 'tpope/vim-sensible' -- Set some sensible defaults for vim
+
+  -- Common dependencies
   use "nvim-lua/popup.nvim" -- An implementation of the Popup API from vim in Neovim
   use "nvim-lua/plenary.nvim" -- Useful lua functions used ny lots of plugins
+  use "kyazdani42/nvim-web-devicons" -- Development icons
 
-  -- Status bar
-  use {
-    'nvim-lualine/lualine.nvim',
-    requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-  }
-
-  -- Colorscheme
-  use 'navarasu/onedark.nvim'
+  -- Editor plugins
+  use 'navarasu/onedark.nvim' -- Colorscheme
+  use "windwp/nvim-autopairs" -- Bracket completion
+  use "numToStr/Comment.nvim" -- Comment lines
+  use "lewis6991/gitsigns.nvim" -- Git integration
+  use "kyazdani42/nvim-tree.lua" -- Tree Explorer
+  use 'nvim-lualine/lualine.nvim' -- Status bar
+  use 'akinsho/bufferline.nvim' -- Display open buffers
+  use 'lukas-reineke/indent-blankline.nvim' -- Display vertical tab lines
 
   -- Autocomplete
   use "hrsh7th/nvim-cmp" -- The completion plugin
@@ -73,6 +80,7 @@ return packer.startup(function(use)
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-media-files.nvim'
 
+  -- Treesitter
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
 
   -- Automatically set up your configuration after cloning packer.nvim

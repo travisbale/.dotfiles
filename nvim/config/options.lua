@@ -17,7 +17,6 @@ local options = {
   swapfile = false,
   splitbelow = true,
   splitright = true,
-  timeoutlen = 100,
   undofile = true,
   updatetime = 300,
   writebackup = false,

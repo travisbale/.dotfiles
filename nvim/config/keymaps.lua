@@ -18,3 +18,17 @@ keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
 keymap("v", ">", ">gv", opts)
+
+-- Telescope mappings
+keymap("n", "<C-p>", "<cmd>Telescope find_files<CR>", opts)
+keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", opts)
+keymap("n", "<leader>fg", "<cmd>Telescope live_grep<CR>", opts)
+keymap("n", "<leader>fb", "<cmd>Telescope buffers<CR>", opts)
+keymap("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", opts)
+
+-- Nvimtree
+keymap("n", "<leader>e", ":NvimTreeFindFileToggle<CR>", opts)
+keymap("n", "<C-\\>", ":NvimTreeFindFileToggle<CR>", opts)
+
+-- Other
+keymap("n", "<C-w>", "<cmd>bd<CR>", opts)
