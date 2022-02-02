@@ -59,6 +59,7 @@ return packer.startup(function(use)
   use 'nvim-lualine/lualine.nvim' -- Status bar
   use 'akinsho/bufferline.nvim' -- Display open buffers
   use 'lukas-reineke/indent-blankline.nvim' -- Display vertical tab lines
+  use 'goolord/alpha-nvim' -- Neovim greeter
 
   -- Autocomplete
   use "hrsh7th/nvim-cmp" -- The completion plugin
@@ -75,6 +76,7 @@ return packer.startup(function(use)
   -- Language Server Protocol
   use "neovim/nvim-lspconfig" -- enable LSP
   use "williamboman/nvim-lsp-installer" -- LSP Installer
+  use 'jose-elias-alvarez/null-ls.nvim' -- for formatters and linters
 
   -- Telescope
   use 'nvim-telescope/telescope.nvim'

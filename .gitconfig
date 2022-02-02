@@ -1,5 +1,6 @@
 [user]
 	email = travis.bale@gmail.com
+	signingkey = 68B332196C7B9563D722FD016E59489C872F8097
 	name = Travis Bale
 [core]
 	editor = nvim
