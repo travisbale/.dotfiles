@@ -1,5 +1,5 @@
 require('onedark').setup {
-    --transparent = true,
+    -- transparent = true,
     colors = {
         bg0 = '#1F2228',
         bg1 = '#24272E',
