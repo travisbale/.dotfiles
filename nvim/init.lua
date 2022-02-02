@@ -15,4 +15,5 @@ require "config.nvim-tree"
 require "config.bufferline"
 require "config.indentline"
 require "config.alpha"
-
+require "config.whichkey"
+require "config.project"

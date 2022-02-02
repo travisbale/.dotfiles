@@ -60,6 +60,8 @@ return packer.startup(function(use)
   use 'akinsho/bufferline.nvim' -- Display open buffers
   use 'lukas-reineke/indent-blankline.nvim' -- Display vertical tab lines
   use 'goolord/alpha-nvim' -- Neovim greeter
+  use 'folke/which-key.nvim' -- Key binding suggestions
+  use 'ahmedkhalf/project.nvim' -- Project management
 
   -- Autocomplete
   use "hrsh7th/nvim-cmp" -- The completion plugin

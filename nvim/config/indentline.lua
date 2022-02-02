@@ -7,6 +7,7 @@ vim.cmd [[highlight IndentBlanklineContextStart gui=none]]
 
 vim.g.indent_blankline_filetype_exclude = {
     "alpha",
+    "packer",
 }
 
 require("indent_blankline").setup {
