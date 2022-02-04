@@ -28,6 +28,8 @@ local options = {
   background = 'dark',
   relativenumber = true,
   -- colorcolumn = "80,120"
+  ignorecase = true,
+  smartcase = true,
 }
 
 for k, v in pairs(options) do
