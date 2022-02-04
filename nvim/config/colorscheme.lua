@@ -9,7 +9,8 @@ require('onedark').setup {
     highlights = {
         TSConstructor = { fmt = 'none' },
         TSParameter = { fg = '$fg' },
-        Whitespace = { fg = '#32363F' },
+        -- Whitespace = { fg = '#32363F' },
+        Whitespace = { fg = '#282C34' },
     },
 }
 
