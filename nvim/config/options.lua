@@ -26,6 +26,8 @@ local options = {
   cursorline = true,
   termguicolors = true, -- set term gui colors
   background = 'dark',
+  relativenumber = true,
+  -- colorcolumn = "80,120"
 }
 
 for k, v in pairs(options) do
