@@ -99,8 +99,8 @@ if [ "$color_prompt" = yes ]; then
     RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
 
     # enable syntax-highlighting
-    if [ -f /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && [ "$color_prompt" = yes ]; then
-	. /usr/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+    if [ -f /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh ] && [ "$color_prompt" = yes ]; then
+	. /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 	ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets pattern)
 	ZSH_HIGHLIGHT_STYLES[default]=none
 	ZSH_HIGHLIGHT_STYLES[unknown-token]=fg=red,bold
@@ -174,40 +174,37 @@ precmd() {
 }
 
 # enable color support of ls, less and man, and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
+alias ls='ls -G'
+#alias dir='dir --color=auto'
+#alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-    alias diff='diff --color=auto'
-    alias ip='ip --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias diff='diff --color=auto'
+alias ip='ip --color=auto'
 
-    export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
-    export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
-    export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
-    export LESS_TERMCAP_so=$'\E[01;33m'    # begin reverse video
-    export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
-    export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
-    export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
+export LESS_TERMCAP_mb=$'\E[1;31m'     # begin blink
+export LESS_TERMCAP_md=$'\E[1;36m'     # begin bold
+export LESS_TERMCAP_me=$'\E[0m'        # reset bold/blink
+export LESS_TERMCAP_so=$'\E[01;33m'    # begin reverse video
+export LESS_TERMCAP_se=$'\E[0m'        # reset reverse video
+export LESS_TERMCAP_us=$'\E[1;32m'     # begin underline
+export LESS_TERMCAP_ue=$'\E[0m'        # reset underline
 
-    # Take advantage of $LS_COLORS for completion as well
-    zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-fi
+# Take advantage of $LS_COLORS for completion as well
+zstyle ':completion:*' list-colors "${(s.:.)LSCOLORS}"
 
 # some more ls aliases
-alias ll='ls -la'
-alias la='ls -A'
-alias l='ls -CF'
+alias ll='ls -laG'
+alias la='ls -AG'
+alias l='ls -CFG'
 alias vim='nvim'
 alias vi='nvim'
 
 # enable auto-suggestions based on the history
-if [ -f /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
-    . /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+if [ -f /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
+    . /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
     # change suggestion color
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#999'
 fi
@@ -219,3 +216,9 @@ fi
 
 autoload -U +X bashcompinit && bashcompinit
 complete -o nospace -C /usr/local/bin/terraform terraform
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/usr/local/opt/google-cloud-sdk/path.zsh.inc' ]; then . '/usr/local/opt/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/usr/local/opt/google-cloud-sdk/completion.zsh.inc' ]; then . '/usr/local/opt/google-cloud-sdk/completion.zsh.inc'; fi
