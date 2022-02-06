@@ -54,12 +54,15 @@ return packer.startup(function(use)
   use 'navarasu/onedark.nvim' -- Colorscheme
   use "windwp/nvim-autopairs" -- Bracket completion
   use "numToStr/Comment.nvim" -- Comment lines
-  use "lewis6991/gitsigns.nvim" -- Git integration
   use "kyazdani42/nvim-tree.lua" -- Tree Explorer
   use 'nvim-lualine/lualine.nvim' -- Status bar
   use 'goolord/alpha-nvim' -- Neovim greeter
   use 'folke/which-key.nvim' -- Key binding suggestions
   use 'ahmedkhalf/project.nvim' -- Project management
+  use 'ThePrimeagen/vim-be-good' -- Vim Practice game
+
+  -- Git
+  use "lewis6991/gitsigns.nvim" -- Git integration
 
   -- Autocomplete
   use "hrsh7th/nvim-cmp" -- The completion plugin
@@ -87,8 +90,8 @@ return packer.startup(function(use)
 
   -- Treesitter
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
+  use 'nvim-treesitter/playground'
 
-  use 'ThePrimeagen/vim-be-good'
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

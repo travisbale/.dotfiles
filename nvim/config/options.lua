@@ -24,6 +24,7 @@ local options = {
   scrolloff = 8,
   sidescrolloff = 8,
   cursorline = true,
+  cursorlineopt = "number",
   termguicolors = true, -- set term gui colors
   background = 'dark',
   relativenumber = true,
