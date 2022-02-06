@@ -3,7 +3,7 @@ require('onedark').setup {
     colors = {
         -- Onedark updates
         bg0 = '#1f2329',
-        bg3 = '#282c34',
+        bg1 = '#282c34',
         bg_d = '#181b20',
         -- transparent
         fg = '#c7cad9',
@@ -11,7 +11,7 @@ require('onedark').setup {
         -- Gruvbox color palette
         -- fg = '#ebdbb2',
         -- bg0 = '#282828',
-        -- bg1 = '#2d2d2d',
+        -- bg1 = '#3c3836',
         -- bg2 = '#504945',
         -- bg3 = '#665c54',
         -- bg_d = '#1d2021',
