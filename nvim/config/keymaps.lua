@@ -32,3 +32,9 @@ keymap("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", opts)
 keymap("n", "<leader>e", ":NvimTreeFindFileToggle<CR>", opts)
 keymap("n", "<C-\\>", ":NvimTreeFindFileToggle<CR>", opts)
 
+-- Sanitize jumplist
+keymap("n", "}", ':<C-u>execute "keepjumps norm! " . v:count1 . "}"<CR>', opts)
+keymap("n", "{", ':<C-u>execute "keepjumps norm! " . v:count1 . "{"<CR>', opts)
+
+keymap("i", "<C-c>", "<Esc>", opts)
+

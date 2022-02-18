@@ -1,8 +1,8 @@
 local options = {
-  mouse = "a", -- enable use of the mouse
+  mouse = "a",
   clipboard = "unnamedplus", -- allow neovim to access system clipboard
   completeopt = {"menu", "menuone", "noselect"}, -- mostly just for cmp
-  number = true, -- enable line numbers
+  number = true,
   wrap = false,
   formatoptions = "tcqrn1",
   tabstop = 4,
@@ -25,7 +25,7 @@ local options = {
   sidescrolloff = 8,
   cursorline = true,
   cursorlineopt = "number",
-  termguicolors = true, -- set term gui colors
+  termguicolors = true,
   background = 'dark',
   relativenumber = true,
   -- colorcolumn = "80,120"
@@ -36,3 +36,4 @@ local options = {
 for k, v in pairs(options) do
   vim.opt[k] = v
 end
+

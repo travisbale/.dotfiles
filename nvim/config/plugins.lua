@@ -63,6 +63,7 @@ return packer.startup(function(use)
 
   -- Git
   use "lewis6991/gitsigns.nvim" -- Git integration
+  use 'tpope/vim-fugitive'
 
   -- Autocomplete
   use "hrsh7th/nvim-cmp" -- The completion plugin
@@ -71,6 +72,7 @@ return packer.startup(function(use)
   use "hrsh7th/cmp-path" -- path completions
   use "hrsh7th/cmp-cmdline" -- cmdline completions
   use "saadparwaiz1/cmp_luasnip" -- snippet completions
+  use 'simrat39/symbols-outline.nvim'
 
   -- snippets
   use "L3MON4D3/LuaSnip" --snippet engine
@@ -87,6 +89,7 @@ return packer.startup(function(use)
   -- Telescope
   use 'nvim-telescope/telescope.nvim'
   use 'nvim-telescope/telescope-media-files.nvim'
+  use 'nvim-telescope/telescope-fzy-native.nvim'
 
   -- Treesitter
   use {'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'}
