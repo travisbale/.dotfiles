@@ -4,7 +4,6 @@
 	name = Travis Bale
 [core]
 	editor = nvim
-	autocrlf = input
 [help]
 	autocorrect = -1
 [rebase]
@@ -23,3 +22,5 @@
 	rebase = false
 [url "ssh://git@gitlabinternal.litmusloop.com/"]
 	insteadOf = https://gitlabinternal.litmusloop.com/
+[url "ssh://git@github.com/pcln/"]
+	insteadOf = https://github.com/pcln/
