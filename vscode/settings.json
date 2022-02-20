@@ -244,7 +244,7 @@
     "editor.selectionHighlight": false,
     "sqltools.useNodeRuntime": true,
     "explorer.autoReveal": false,
-    "editor.fontFamily": "'Consolas'",
+    "editor.fontFamily": "'Droid Sans Mono'",
     "css.validate": false,
     "highlight-matching-tag.styles": {
         "opening": {
@@ -261,7 +261,7 @@
     "[json]": {
         "editor.defaultFormatter": "vscode.json-language-features"
     },
-    "terminal.integrated.fontFamily": "consolas",
+    "terminal.integrated.fontFamily": "Droid Sans Mono",
     "python.autoComplete.addBrackets": true,
     "python.analysis.completeFunctionParens": true,
     "python.globalModuleInstallation": true,
@@ -284,4 +284,5 @@
         "jupyter-notebook": "left"
     },
     "workbench.startupEditor": "none",
+    "terminal.integrated.fontSize": 13,
 }
