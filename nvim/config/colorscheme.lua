@@ -1,12 +1,12 @@
-require('onedark').setup {
+require("onedark").setup({
     transparent = true,
     colors = {
         -- Onedark updates
-        bg0 = '#1f2329',
-        bg1 = '#282c34',
-        bg_d = '#181b20',
+        bg0 = "#1f2329",
+        bg1 = "#282c34",
+        bg_d = "#181b20",
         -- transparent
-        fg = '#c7cad9',
+        fg = "#c7cad9",
 
         -- Gruvbox color palette
         -- fg = '#ebdbb2',
@@ -25,15 +25,14 @@ require('onedark').setup {
         -- cyan = '#8ec07c',
     },
     highlights = {
-        TSConstructor = { fmt = 'none' },
-        TSParameter = { fg = '$fg' },
-        TSPunctBracket = { fg = '$fg' },
-        Whitespace = { fg = '$bg2' },
+        TSConstructor = { fmt = "none" },
+        TSParameter = { fg = "$fg" },
+        TSPunctBracket = { fg = "$fg" },
+        Whitespace = { fg = "$bg2" },
 
         -- Transparent
-        CursorLine = { bg = '$bg0' },
+        CursorLine = { bg = "$bg0" },
     },
-}
+})
 
-require('onedark').load()
-
+require("onedark").load()
