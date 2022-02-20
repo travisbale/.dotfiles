@@ -1,7 +1,6 @@
 require "config.options"
 require "config.plugins"
 require "config.colorscheme"
-require "config.filetypes"
 require "config.completions"
 require "config.keymaps"
 require "config.lsp"
