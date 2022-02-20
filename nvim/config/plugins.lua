@@ -79,6 +79,7 @@ return packer.startup(function(use)
   -- Language Server Protocol
   use "neovim/nvim-lspconfig" -- enable LSP
   use "williamboman/nvim-lsp-installer" -- LSP Installer
+  use "jose-elias-alvarez/null-ls.nvim" -- Support non LSP sources
 
   -- Language plugins
   -- use "darrikonn/vim-gofmt"
