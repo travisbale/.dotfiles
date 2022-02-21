@@ -1,7 +1,6 @@
 -- Require editor configuration
 require("config.options")
 require("config.keymaps")
-require("config.autocmd")
 require("config.colorscheme")
 
 -- Require plugin configuration
