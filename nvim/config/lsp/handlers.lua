@@ -85,11 +85,15 @@ local function lsp_keymaps(bufnr)
 end
 
 M.on_attach = function(client, bufnr)
-    if client.name == "tsserver" or client.name == "gopls" then
+    if client.name == "tsserver" or client.name == "gopls" or client.name == "sumneko_lua" then
         client.resolved_capabilities.document_formatting = false
     end
     lsp_keymaps(bufnr)
     lsp_highlight_document(client)
+
+    vim.api.nvim_command([[
+        autocmd BufWritePre * lua vim.lsp.buf.formatting_sync()
+    ]])
 end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
