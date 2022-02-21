@@ -39,4 +39,6 @@ keymap("n", "<C-\\>", "<cmd>NvimTreeFindFileToggle<CR>", opts)
 keymap("n", "}", ':<C-u>execute "keepjumps norm! " . v:count1 . "}"<CR>', opts)
 keymap("n", "{", ':<C-u>execute "keepjumps norm! " . v:count1 . "{"<CR>', opts)
 
--- Git
+-- Map W and Q to their lowercase equivalents
+keymap("c", "W", "w", { noremap = true })
+keymap("c", "Q", "q", { noremap = true })
