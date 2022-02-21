@@ -40,5 +40,5 @@ keymap("n", "}", ':<C-u>execute "keepjumps norm! " . v:count1 . "}"<CR>', opts)
 keymap("n", "{", ':<C-u>execute "keepjumps norm! " . v:count1 . "{"<CR>', opts)
 
 -- Map W and Q to their lowercase equivalents
-keymap("c", "W", "w", { noremap = true })
-keymap("c", "Q", "q", { noremap = true })
+keymap("n", ":W", ":w", { noremap = true })
+keymap("n", ":Q", ":q", { noremap = true })
