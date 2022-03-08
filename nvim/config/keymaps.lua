@@ -33,7 +33,7 @@ keymap("n", "<leader>fh", "<cmd>Telescope help_tags<CR>", opts)
 
 -- Nvimtree
 keymap("n", "<leader>e", "<cmd>NvimTreeFindFileToggle<CR>", opts)
-keymap("n", "<C-\\>", "<cmd>NvimTreeFindFileToggle<CR>", opts)
+keymap("n", "<C-\\>", "<cmd>NvimTreeFindFile<CR>", opts)
 
 -- Jumplist
 keymap("n", "}", ':<C-u>execute "keepjumps norm! " . v:count1 . "}"<CR>', opts)
@@ -42,3 +42,7 @@ keymap("n", "{", ':<C-u>execute "keepjumps norm! " . v:count1 . "{"<CR>', opts)
 -- Map W and Q to their lowercase equivalents
 keymap("n", ":W", ":w", { noremap = true })
 keymap("n", ":Q", ":q", { noremap = true })
+
+-- Clear highlighting on escape in normal mode
+keymap("n", "<esc>", "<cmd>noh<CR><esc>", opts)
+keymap("n", "<esc>^[", "<esc>^[", opts)
