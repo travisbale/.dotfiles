@@ -8,6 +8,7 @@
     ~/.gitconfig: .gitconfig
     ~/.zshrc: zsh/.zshrc
     ~/.zshenv: zsh/.zshenv
+    ~/.zprofile: zsh/.zprofile
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.tmux/themes/onedark.tmux: tmux/onedark.tmux
     ~/.config/nvim/init.lua: nvim/init.lua
