@@ -12,10 +12,20 @@ null_ls.setup({
             command = base_dir .. "/bin/stylua",
             extra_args = { "--indent-type", "Spaces" },
         }),
+        null_ls.builtins.formatting.markdownlint.with({
+            command = base_dir .. "/node_modules/.bin/markdownlint",
+        }),
 
         -- Diagnostics
         null_ls.builtins.diagnostics.markdownlint.with({
             command = base_dir .. "/node_modules/.bin/markdownlint",
+        }),
+        null_ls.builtins.diagnostics.jsonlint.with({
+            command = base_dir .. "/node_modules/.bin/jsonlint",
+        }),
+        null_ls.builtins.diagnostics.yamllint.with({
+            command = base_dir .. "/node_modules/.bin/yamllint",
+            extra_args = { "--schema=CORE_SCHEMA" },
         }),
     },
 })
