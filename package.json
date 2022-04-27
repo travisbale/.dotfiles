@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "markdownlint": "^0.25.1",
+    "yaml-lint": "^1.6.0"
+  }
+}
