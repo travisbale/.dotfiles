@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "jsonlint": "^1.6.3",
+    "phplint": "^2.0.5",
+    "yaml-lint": "^1.2.4"
+  }
+}
