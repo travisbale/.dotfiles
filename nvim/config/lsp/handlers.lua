@@ -88,6 +88,9 @@ M.on_attach = function(client, bufnr)
     if client.name == "tsserver" or client.name == "gopls" or client.name == "sumneko_lua" then
         client.resolved_capabilities.document_formatting = false
     end
+    if client.name == "eslint" then
+        vim.api.nvim_command([[ autocmd BufWritePre * EslintFixAll ]])
+    end
     lsp_keymaps(bufnr)
     lsp_highlight_document(client)
 

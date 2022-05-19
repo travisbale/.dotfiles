@@ -13,18 +13,21 @@ null_ls.setup({
             extra_args = { "--indent-type", "Spaces" },
         }),
         null_ls.builtins.formatting.markdownlint.with({
-            command = base_dir .. "/node_modules/.bin/markdownlint",
+            command = base_dir .. "/../node_modules/.bin/markdownlint",
+        }),
+        null_ls.builtins.formatting.black.with({
+            command = base_dir .. "/../.venv/bin/black",
         }),
 
         -- Diagnostics
         null_ls.builtins.diagnostics.markdownlint.with({
-            command = base_dir .. "/node_modules/.bin/markdownlint",
+            command = base_dir .. "/../node_modules/.bin/markdownlint",
         }),
         null_ls.builtins.diagnostics.jsonlint.with({
-            command = base_dir .. "/node_modules/.bin/jsonlint",
+            command = base_dir .. "/../node_modules/.bin/jsonlint",
         }),
         null_ls.builtins.diagnostics.yamllint.with({
-            command = base_dir .. "/node_modules/.bin/yamllint",
+            command = base_dir .. "/../node_modules/.bin/yamllint",
             extra_args = { "--schema=CORE_SCHEMA" },
         }),
     },

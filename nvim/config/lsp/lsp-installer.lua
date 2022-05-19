@@ -1,38 +1,43 @@
-local lsp_installer = require("nvim-lsp-installer")
+require("nvim-lsp-installer").setup({})
 
--- Register a handler that will be called for all installed servers.
--- Alternatively, you may also register handlers on specific server instances instead (see example below).
-lsp_installer.on_server_ready(function(server)
+local lspconfig = require("lspconfig")
+local servers = {
+    "bashls",
+    "cssls",
+    "dockerls",
+    "eslint",
+    "foam_ls",
+    "golangci_lint_ls",
+    "gopls",
+    "grammarly",
+    "graphql",
+    "html",
+    "jsonls",
+    "jdtls",
+    "sumneko_lua",
+    "pyright",
+    "tailwindcss",
+    "terraformls",
+    "tsserver",
+    "vuels",
+    "yamlls",
+}
+
+lspconfig.jsonls.setup({
+    ensure_installed = servers,
+})
+
+for _, server in pairs(servers) do
     local opts = {
         on_attach = require("config.lsp.handlers").on_attach,
         capabilities = require("config.lsp.handlers").capabilities,
     }
 
-    if server.name == "jsonls" then
-        local jsonls_opts = require("config.lsp.settings.jsonls")
-        opts = vim.tbl_deep_extend("force", jsonls_opts, opts)
+    local has_custom_opts, custom_ops = pcall(require, 'config.lsp.settings.' .. server)
+    if has_custom_opts then
+        opts = vim.tbl_deep_extend("force", custom_ops, opts)
     end
 
-    if server.name == "sumneko_lua" then
-        local sumneko_opts = require("config.lsp.settings.sumneko_lua")
-        opts = vim.tbl_deep_extend("force", sumneko_opts, opts)
-    end
+    lspconfig[server].setup(opts)
+end
 
-    if server.name == "gopls" then
-        opts = vim.tbl_deep_extend("force", opts, {
-            cmd = { "gopls", "serve" },
-            settings = {
-                gopls = {
-                    analyses = {
-                        unusedparams = true,
-                    },
-                    staticcheck = true,
-                },
-            },
-        })
-    end
-
-    -- This setup() function is exactly the same as lspconfig's setup function.
-    -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
-    server:setup(opts)
-end)
