@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "jsonlint": "^1.6.3",
     "markdownlint": "^0.25.1",
     "yaml-lint": "^1.6.0"
   }

@@ -259,7 +259,7 @@
     "window.zoomLevel": 0,
     "python.showStartPage": false,
     "[json]": {
-        "editor.defaultFormatter": "vscode.json-language-features"
+        "editor.defaultFormatter": "HookyQR.beautify"
     },
     "terminal.integrated.fontFamily": "Droid Sans Mono",
     "python.autoComplete.addBrackets": true,
@@ -285,4 +285,7 @@
     },
     "workbench.startupEditor": "none",
     "terminal.integrated.fontSize": 13,
+    "cSpell.ignoreWords": [
+        "Timelapse"
+    ],
 }
