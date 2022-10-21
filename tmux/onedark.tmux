@@ -1,4 +1,5 @@
 #!/bin/bash
+# onedark color palette
 onedark_black="#282c34"
 onedark_blue="#61afef"
 onedark_yellow="#e5c07b"
@@ -8,6 +9,17 @@ onedark_green="#98c379"
 onedark_visual_grey="#3e4452"
 onedark_comment_grey="#5c6370"
 onedark_cyan="#56b6c2"
+
+# gruvbox palette
+# onedark_black="#3c3836"
+# onedark_blue="#83a598"
+# onedark_yellow="#fabd2f"
+# onedark_red="#fb4934"
+# onedark_white="#ebdbb2"
+# onedark_green="#b8bb26"
+# onedark_visual_grey="#665c54"
+# onedark_comment_grey="#b8bb26"
+# onedark_cyan="#8ec07c"
 
 get() {
    local option=$1
