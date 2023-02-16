@@ -28,7 +28,7 @@ local options = {
     termguicolors = true, -- set term gui colors
     background = "dark",
     relativenumber = true,
-    -- colorcolumn = "80,120"
+    -- colorcolumn = "80,120",
     ignorecase = true,
     smartcase = true,
 }
