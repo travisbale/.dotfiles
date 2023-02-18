@@ -1,8 +1,7 @@
 {
-  "dependencies": {
-    "jsonlint": "^1.6.3",
-    "markdownlint": "^0.25.1",
-    "markdownlint-cli": "^0.32.2",
-    "yaml-lint": "^1.6.0"
-  }
+    "dependencies": {
+        "jsonlint": "^1.6.3",
+        "markdownlint": "^0.25.1",
+        "markdownlint-cli": "^0.32.2"
+    }
 }

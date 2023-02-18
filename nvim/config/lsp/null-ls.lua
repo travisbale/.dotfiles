@@ -1,5 +1,5 @@
 local null_ls = require("null-ls")
-local base_dir = os.getenv("HOME") .. "/.dotfiles/nvim"
+local base_dir = os.getenv("HOME") .. "/.dotfiles"
 
 null_ls.setup({
     debug = false,
@@ -13,22 +13,18 @@ null_ls.setup({
             extra_args = { "--indent-type", "Spaces" },
         }),
         null_ls.builtins.formatting.markdownlint.with({
-            command = base_dir .. "/../node_modules/.bin/markdownlint",
+            command = base_dir .. "/node_modules/.bin/markdownlint",
         }),
         null_ls.builtins.formatting.black.with({
-            command = base_dir .. "/../.venv/bin/black",
+            command = base_dir .. "/.venv/bin/black",
         }),
 
         -- Diagnostics
         null_ls.builtins.diagnostics.markdownlint.with({
-            command = base_dir .. "/../node_modules/.bin/markdownlint",
+            command = base_dir .. "/node_modules/.bin/markdownlint",
         }),
         null_ls.builtins.diagnostics.jsonlint.with({
-            command = base_dir .. "/../node_modules/.bin/jsonlint",
-        }),
-        null_ls.builtins.diagnostics.yamllint.with({
-            command = base_dir .. "/../node_modules/.bin/yamllint",
-            extra_args = { "--schema=CORE_SCHEMA" },
+            command = base_dir .. "/node_modules/.bin/jsonlint",
         }),
     },
 })

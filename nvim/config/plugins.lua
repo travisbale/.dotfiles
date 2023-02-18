@@ -1,5 +1,4 @@
--- Automatically install packer
-
+-- Automatically install packer if it has not been installed
 local install_path = vim.fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
 if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
     PACKER_BOOTSTRAP = vim.fn.system({
@@ -44,7 +43,7 @@ return packer.startup(function(use)
 
     -- Common dependencies
     use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
-    use("nvim-lua/plenary.nvim") -- Useful lua functions used ny lots of plugins
+    use("nvim-lua/plenary.nvim") -- Useful lua functions used by lots of plugins
     use("kyazdani42/nvim-web-devicons") -- Development icons
 
     -- Editor plugins
@@ -56,7 +55,6 @@ return packer.startup(function(use)
     use("goolord/alpha-nvim") -- Neovim greeter
     use("folke/which-key.nvim") -- Key binding suggestions
     use("ahmedkhalf/project.nvim") -- Project management
-    use("ThePrimeagen/vim-be-good") -- Vim Practice game
     use("ferrine/md-img-paste.vim") -- Paste clipboard images to md files
 
     -- Git
@@ -78,7 +76,8 @@ return packer.startup(function(use)
 
     -- Language Server Protocol
     use("neovim/nvim-lspconfig") -- enable LSP
-    use("williamboman/nvim-lsp-installer") -- LSP Installer
+    use("williamboman/mason.nvim") -- LSP Installer
+    use("williamboman/mason-lspconfig.nvim") -- Bridges nvim-lspconfig with mason.nvim
     use("jose-elias-alvarez/null-ls.nvim") -- Support non LSP sources
 
     -- Telescope

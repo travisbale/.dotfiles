@@ -1,10 +1,12 @@
 -- Require editor configuration
 require("config.options")
 require("config.keymaps")
-require("config.colorscheme")
 
--- Require plugin configuration
+-- Require package manager
 require("config.plugins")
+
+-- Require plugin configurations
+require("config.colorscheme")
 require("config.completions")
 require("config.lsp")
 require("config.telescope")
