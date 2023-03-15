@@ -45,7 +45,6 @@ cmp.setup({
             luasnip.lsp_expand(args.body) -- For `luasnip` users.
         end,
     },
-
     mapping = {
         ["<C-k>"] = cmp.mapping.select_prev_item(),
         ["<C-j>"] = cmp.mapping.select_next_item(),
@@ -58,9 +57,7 @@ cmp.setup({
         ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
                 cmp.select_next_item()
-            elseif luasnip.expandable() then
-                luasnip.expand()
-            elseif luasnip.expand_or_jumpable() then
+            elseif luasnip.expand_or_locally_jumpable() then
                 luasnip.expand_or_jump()
             elseif has_words_before() then
                 cmp.complete()
@@ -78,7 +75,6 @@ cmp.setup({
             end
         end, { "i", "s" }),
     },
-
     formatting = {
         fields = { "kind", "abbr", "menu" },
         format = function(entry, vim_item)
@@ -92,7 +88,6 @@ cmp.setup({
             return vim_item
         end,
     },
-
     sources = {
         { name = "nvim_lsp" },
         { name = "luasnip" },
