@@ -60,6 +60,8 @@ return packer.startup(function(use)
     -- Git
     use("lewis6991/gitsigns.nvim") -- Git integration
     use("tpope/vim-fugitive")
+    use("rhysd/git-messenger.vim")
+    use("APZelos/blamer.nvim")
 
     -- Autocomplete
     use("hrsh7th/nvim-cmp") -- The completion plugin
