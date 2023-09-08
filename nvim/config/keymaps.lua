@@ -25,6 +25,10 @@ keymap("n", "<C-u>", "<C-u>zz", opts)
 keymap("n", "n", "nzzzv", opts)
 keymap("n", "N", "Nzzzv", opts)
 
+-- Save shortcut
+keymap("i", "<C-s>", "<Esc>:w<CR>", opts)
+keymap("n", "<C-s>", "<Esc>:w<CR>", opts)
+
 -- Visual --
 -- Stay in indent mode
 keymap("v", "<", "<gv", opts)
