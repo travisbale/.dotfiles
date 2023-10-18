@@ -59,6 +59,8 @@ return packer.startup(function(use)
     use("kchmck/vim-coffee-script") -- Coffeescript syntax highlighting
     use("tpope/vim-cucumber") -- Commands to jump from steps to definitions
     use("tpope/vim-surround") -- Mappings for working with brackets, quotes, and tags
+    use("tpope/vim-endwise") -- Add 'end' after 'if', 'def', etc
+    use("vim-test/vim-test") -- Wrapper for running tests on different granularities
 
     -- Ruby
     use("vim-ruby/vim-ruby")
