@@ -25,9 +25,18 @@ keymap("n", "<C-u>", "<C-u>zz", opts)
 keymap("n", "n", "nzzzv", opts)
 keymap("n", "N", "Nzzzv", opts)
 
+-- Tmux navigation
+keymap("n", "<C-h>", "<C-w>h", opts)
+keymap("n", "<C-j>", "<C-w>j", opts)
+keymap("n", "<C-k>", "<C-w>k", opts)
+keymap("n", "<C-l>", "<C-w>l", opts)
+
 -- Save shortcut
 keymap("i", "<C-s>", "<Esc>:w<CR>", opts)
 keymap("n", "<C-s>", "<Esc>:w<CR>", opts)
+
+-- Rails mappings
+keymap("n", "<leader>rt", "<cmd>Rails<CR>", opts) -- Run current test, spec, or feature
 
 -- Visual --
 -- Stay in indent mode
