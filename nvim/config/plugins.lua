@@ -55,11 +55,19 @@ return packer.startup(function(use)
     use("goolord/alpha-nvim") -- Neovim greeter
     use("folke/which-key.nvim") -- Key binding suggestions
     use("ahmedkhalf/project.nvim") -- Project management
-    use("ferrine/md-img-paste.vim") -- Paste clipboard images to md files
+    use("img-paste-devs/md-img-paste.vim") -- Paste clipboard images to md files
+    use("kchmck/vim-coffee-script") -- Coffeescript syntax highlighting
+    use("tpope/vim-cucumber") -- Commands to jump from steps to definitions
+    use("tpope/vim-surround") -- Mappings for working with brackets, quotes, and tags
+
+    -- Ruby
+    use("vim-ruby/vim-ruby")
+    use("tpope/vim-rails")
 
     -- Git
     use("lewis6991/gitsigns.nvim") -- Git integration
     use("tpope/vim-fugitive")
+    use("tpope/vim-rhubarb")
     use("rhysd/git-messenger.vim")
     use("APZelos/blamer.nvim")
 
