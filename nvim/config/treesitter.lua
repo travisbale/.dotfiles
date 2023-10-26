@@ -22,3 +22,7 @@ require("nvim-treesitter.configs").setup({
         additional_vim_regex_highlighting = false,
     },
 })
+
+-- Enable the treesitter autotag plugin
+-- Using the treesitter configuration doesn't seem to work for all filetypes, notably eruby
+require("nvim-ts-autotag").setup()

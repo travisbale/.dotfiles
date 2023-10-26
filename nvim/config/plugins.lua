@@ -49,6 +49,7 @@ return packer.startup(function(use)
     -- Editor plugins
     use("navarasu/onedark.nvim") -- Colorscheme
     use("windwp/nvim-autopairs") -- Bracket completion
+    use("windwp/nvim-ts-autotag") -- Tag completion
     use("numToStr/Comment.nvim") -- Comment lines
     use("kyazdani42/nvim-tree.lua") -- Tree Explorer
     use("nvim-lualine/lualine.nvim") -- Status bar
