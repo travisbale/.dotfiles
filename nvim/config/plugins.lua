@@ -55,17 +55,26 @@ return packer.startup(function(use)
     use("nvim-lualine/lualine.nvim") -- Status bar
     use("goolord/alpha-nvim") -- Neovim greeter
     use("folke/which-key.nvim") -- Key binding suggestions
-    use("ahmedkhalf/project.nvim") -- Project management
     use("img-paste-devs/md-img-paste.vim") -- Paste clipboard images to md files
-    use("kchmck/vim-coffee-script") -- Coffeescript syntax highlighting
-    use("tpope/vim-cucumber") -- Commands to jump from steps to definitions
     use("tpope/vim-surround") -- Mappings for working with brackets, quotes, and tags
     use("tpope/vim-endwise") -- Add 'end' after 'if', 'def', etc
-    use("vim-test/vim-test") -- Wrapper for running tests on different granularities
 
-    -- Ruby
-    use("vim-ruby/vim-ruby")
-    use("tpope/vim-rails")
+    -- Neovim config and plugin development
+    use("folke/neodev.nvim")
+
+    -- Test plugins
+    use("nvim-neotest/neotest") -- Framework for interacting with tests
+    use("nvim-neotest/neotest-go") -- Neotest adapater for go
+    use("nvim-neotest/neotest-python") -- Neotest adapater for python
+    use("nvim-neotest/neotest-vim-test") -- Neotest adapater for vim-test
+    use("olimorris/neotest-rspec") -- Neotest adapter for rspec
+    use("vim-test/vim-test") -- Wrapper for running tests on different granularities
+    use("tpope/vim-cucumber") -- Commands to jump from steps to definitions
+
+    -- Language plugins
+    use("vim-ruby/vim-ruby") -- Ruby
+    use("tpope/vim-rails") -- Ruby on Rails
+    use("kchmck/vim-coffee-script") -- Coffeescript syntax highlighting
 
     -- Git
     use("lewis6991/gitsigns.nvim") -- Git integration

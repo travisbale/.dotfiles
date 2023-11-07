@@ -65,3 +65,10 @@ keymap("n", ":Q", ":q", { noremap = true })
 -- Clear highlighting on escape in normal mode
 keymap("n", "<esc>", "<cmd>noh<CR><esc>", opts)
 keymap("n", "<esc>^[", "<esc>^[", opts)
+
+-- Neotest mappings
+keymap("n", "<leader>tt", "<cmd>lua require('neotest').run.run()<CR>", opts)
+keymap("n", "<leader>tl", "<cmd>lua require('neotest').run.run_last()<CR>", opts)
+keymap("n", "<leader>ta", "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<CR>", opts)
+keymap("n", "<leader>ts", "<cmd>lua require('neotest').summary.toggle()<CR>", opts)
+keymap("n", "<leader>to", "<cmd>lua require('neotest').output.open({ auto_close = true })<CR>", opts)
