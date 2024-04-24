@@ -5,9 +5,7 @@ null_ls.setup({
     debug = false,
     sources = {
         -- Formatters
-        null_ls.builtins.formatting.goimports.with({
-            command = base_dir .. "/bin/goimports",
-        }),
+        null_ls.builtins.formatting.goimports,
         null_ls.builtins.formatting.stylua.with({
             command = base_dir .. "/bin/stylua",
             extra_args = { "--indent-type", "Spaces" },
@@ -22,7 +20,7 @@ null_ls.setup({
         -- Diagnostics
         null_ls.builtins.diagnostics.markdownlint.with({
             command = base_dir .. "/node_modules/.bin/markdownlint",
-            extra_args = { "--disable", "MD013" }
+            extra_args = { "--disable", "MD013" },
         }),
         null_ls.builtins.diagnostics.jsonlint.with({
             command = base_dir .. "/node_modules/.bin/jsonlint",
