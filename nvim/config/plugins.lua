@@ -64,6 +64,7 @@ return packer.startup(function(use)
 
     -- Test plugins
     use("nvim-neotest/neotest") -- Framework for interacting with tests
+    use("nvim-neotest/nvim-nio") -- Library for asynchronous IO
     use("nvim-neotest/neotest-go") -- Neotest adapater for go
     use("nvim-neotest/neotest-python") -- Neotest adapater for python
     use("nvim-neotest/neotest-vim-test") -- Neotest adapater for vim-test
