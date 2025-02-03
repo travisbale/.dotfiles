@@ -199,10 +199,11 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 
 # some more ls aliases
-alias ll='ls -la'
+alias ll='ls -lah'
 alias la='ls -A'
 alias l='ls -CF'
 alias vim='nvim'
+alias nc='rlwrap nc'
 alias vi='nvim'
 
 # enable auto-suggestions based on the history
