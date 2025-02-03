@@ -44,14 +44,14 @@ return packer.startup(function(use)
     -- Common dependencies
     use("nvim-lua/popup.nvim") -- An implementation of the Popup API from vim in Neovim
     use("nvim-lua/plenary.nvim") -- Useful lua functions used by lots of plugins
-    use("kyazdani42/nvim-web-devicons") -- Development icons
 
     -- Editor plugins
     use("navarasu/onedark.nvim") -- Colorscheme
     use("windwp/nvim-autopairs") -- Bracket completion
     use("windwp/nvim-ts-autotag") -- Tag completion
     use("numToStr/Comment.nvim") -- Comment lines
-    use("kyazdani42/nvim-tree.lua") -- Tree Explorer
+    use("nvim-tree/nvim-tree.lua") -- Tree Explorer
+    use("nvim-tree/nvim-web-devicons") -- Development icons
     use("nvim-lualine/lualine.nvim") -- Status bar
     use("goolord/alpha-nvim") -- Neovim greeter
     use("folke/which-key.nvim") -- Key binding suggestions
