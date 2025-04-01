@@ -22,8 +22,5 @@ null_ls.setup({
             command = base_dir .. "/node_modules/.bin/markdownlint",
             extra_args = { "--disable", "MD013" },
         }),
-        null_ls.builtins.diagnostics.jsonlint.with({
-            command = base_dir .. "/node_modules/.bin/jsonlint",
-        }),
     },
 })

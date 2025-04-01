@@ -68,14 +68,7 @@ return packer.startup(function(use)
     use("nvim-neotest/neotest-go") -- Neotest adapater for go
     use("nvim-neotest/neotest-python") -- Neotest adapater for python
     use("nvim-neotest/neotest-vim-test") -- Neotest adapater for vim-test
-    use("olimorris/neotest-rspec") -- Neotest adapter for rspec
     use("vim-test/vim-test") -- Wrapper for running tests on different granularities
-    use("tpope/vim-cucumber") -- Commands to jump from steps to definitions
-
-    -- Language plugins
-    use("vim-ruby/vim-ruby") -- Ruby
-    use("tpope/vim-rails") -- Ruby on Rails
-    use("kchmck/vim-coffee-script") -- Coffeescript syntax highlighting
 
     -- Git
     use("lewis6991/gitsigns.nvim") -- Git integration
@@ -101,7 +94,7 @@ return packer.startup(function(use)
     use("neovim/nvim-lspconfig") -- enable LSP
     use("williamboman/mason.nvim") -- LSP Installer
     use("williamboman/mason-lspconfig.nvim") -- Bridges nvim-lspconfig with mason.nvim
-    use("jose-elias-alvarez/null-ls.nvim") -- Support non LSP sources
+    use("nvimtools/none-ls.nvim") -- Support non LSP sources
 
     -- Telescope
     use("nvim-telescope/telescope.nvim")
