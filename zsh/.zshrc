@@ -205,6 +205,8 @@ alias l='ls -CF'
 alias vim='nvim'
 alias nc='rlwrap nc'
 alias vi='nvim'
+alias crackmapexec="netexec"
+alias xfreerdp="xfreerdp3"
 
 # enable auto-suggestions based on the history
 if [ -f ~/.dotfiles/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh ]; then
