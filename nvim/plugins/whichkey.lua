@@ -1,3 +1,3 @@
 return {
-  "folke/which-key.nvim",   -- Key binding suggestions
+    "folke/which-key.nvim", -- Key binding suggestions
 }

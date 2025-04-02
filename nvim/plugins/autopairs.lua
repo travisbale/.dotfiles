@@ -1,5 +1,5 @@
 return {
-  "windwp/nvim-autopairs",   -- Bracket completion
-  event = "InsertEnter",
-  config = true,
+    "windwp/nvim-autopairs", -- Bracket completion
+    event = "InsertEnter",
+    config = true,
 }

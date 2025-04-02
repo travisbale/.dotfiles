@@ -1,3 +1,3 @@
 return {
-  "numToStr/Comment.nvim",   -- Comment lines
+    "numToStr/Comment.nvim", -- Comment lines
 }
