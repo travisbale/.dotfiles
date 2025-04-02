@@ -8,17 +8,22 @@ return {
 
     config = function()
         local signs = {
-            { name = "DiagnosticSignError", text = "" },
-            { name = "DiagnosticSignWarn", text = "" },
-            { name = "DiagnosticSignHint", text = "" },
-            { name = "DiagnosticSignInfo", text = "" },
+            [vim.diagnostic.severity.ERROR] = { name = "DiagnosticSignError", text = "" },
+            [vim.diagnostic.severity.WARN] = { name = "DiagnosticSignWarn", text = "" },
+            [vim.diagnostic.severity.HINT] = { name = "DiagnosticSignHint", text = "" },
+            [vim.diagnostic.severity.INFO] = { name = "DiagnosticSignInfo", text = "" },
         }
 
-        for _, sign in ipairs(signs) do
+        for _, sign in pairs(signs) do
             vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
         end
 
         vim.diagnostic.config({
+            virtual_text = {
+                prefix = function(diagnostic)
+                    return string.format("%s ", signs[diagnostic.severity].text)
+                end,
+            },
             signs = {
                 active = signs,
             },
@@ -26,10 +31,9 @@ return {
             underline = true,
             severity_sort = true,
             float = {
-                focusable = false,
-                style = "minimal",
                 border = "rounded",
                 source = true,
+                severity_sort = true,
                 header = "",
                 prefix = "",
             },
@@ -84,7 +88,7 @@ return {
                 bufnr,
                 "n",
                 "gl",
-                '<cmd>lua vim.diagnostic.open_float({ border = "rounded" })<CR>',
+                '<cmd>lua vim.diagnostic.open_float({ border = "rounded", source = true })<CR>',
                 opts
             )
             vim.api.nvim_buf_set_keymap(
