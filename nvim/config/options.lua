@@ -31,6 +31,7 @@ local options = {
   -- colorcolumn = "80,120",
   ignorecase = true,
   smartcase = true,
+  spell = true,
 }
 
 for k, v in pairs(options) do
