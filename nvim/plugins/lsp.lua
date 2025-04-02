@@ -1,31 +1,27 @@
 return {
-    "neovim/nvim-lspconfig", -- enable LSP
+    "neovim/nvim-lspconfig",
 
     dependencies = {
-        "williamboman/mason.nvim", -- LSP Installer
+        "williamboman/mason.nvim",
         { "williamboman/mason-lspconfig.nvim", config = function() end }, -- Bridges nvim-lspconfig with mason.nvim
     },
 
     config = function()
         local signs = {
-            [vim.diagnostic.severity.ERROR] = { name = "DiagnosticSignError", text = "" },
-            [vim.diagnostic.severity.WARN] = { name = "DiagnosticSignWarn", text = "" },
-            [vim.diagnostic.severity.HINT] = { name = "DiagnosticSignHint", text = "" },
-            [vim.diagnostic.severity.INFO] = { name = "DiagnosticSignInfo", text = "" },
+            [vim.diagnostic.severity.ERROR] = "",
+            [vim.diagnostic.severity.WARN] = "",
+            [vim.diagnostic.severity.HINT] = "",
+            [vim.diagnostic.severity.INFO] = "",
         }
-
-        for _, sign in pairs(signs) do
-            vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = "" })
-        end
 
         vim.diagnostic.config({
             virtual_text = {
                 prefix = function(diagnostic)
-                    return string.format("%s ", signs[diagnostic.severity].text)
+                    return string.format("%s ", signs[diagnostic.severity])
                 end,
             },
             signs = {
-                active = signs,
+                text = signs,
             },
             update_in_insert = true,
             underline = true,
