@@ -14,3 +14,4 @@
     ~/.config/nvim/init.lua: nvim/init.lua
     ~/.config/nvim/ftplugin: nvim/ftplugin
     ~/.config/nvim/lua/config: nvim/config
+    ~/.config/nvim/lua/plugins: nvim/plugins

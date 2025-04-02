@@ -1,6 +1,10 @@
-require("onedark").setup({
-    transparent = true,
-    colors = {
+return {
+  "navarasu/onedark.nvim",   -- Colorscheme
+
+  config = function()
+    require("onedark").setup({
+      transparent = true,
+      colors = {
         -- Onedark updates
         bg0 = "#1f2329",
         bg1 = "#282c34",
@@ -23,8 +27,8 @@ require("onedark").setup({
         -- orange = "#fe8019",
         -- blue = "#83a598",
         -- cyan = "#8ec07c",
-    },
-    highlights = {
+      },
+      highlights = {
         TSConstructor = { fmt = "none" },
         TSParameter = { fg = "$fg" },
         TSPunctBracket = { fg = "$fg" },
@@ -32,7 +36,9 @@ require("onedark").setup({
 
         -- Transparent
         CursorLine = { bg = "$bg0" },
-    },
-})
+      },
+    })
 
-require("onedark").load()
+    require("onedark").load()
+  end,
+}

@@ -1,24 +1,26 @@
--- Require editor configuration
+-- Automatically install packer if it has not been installed
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+
+  if vim.v.shell_error ~= 0 then
+    vim.api.nvim_echo({
+      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+      { out,                            "WarningMsg" },
+      { "\nPress any key to exit..." },
+    }, true, {})
+    vim.fn.getchar()
+    os.exit(1)
+  end
+end
+
+vim.opt.rtp:prepend(lazypath)
+
+-- Set basic options and keymaps
 require("config.options")
 require("config.keymaps")
 
--- Require package manager
-require("config.plugins")
-
--- Require plugin configurations
-require("config.colorscheme")
-require("config.completions")
-require("config.lsp")
-require("config.telescope")
-require("config.treesitter")
-require("config.treesitter-context")
-require("config.lualine")
-require("config.autopairs")
-require("config.comment")
-require("config.gitsigns")
-require("config.nvim-tree")
-require("config.alpha")
-require("config.whichkey")
-require("config.blamer")
-require("config.neotest")
-require("config.neodev")
+-- Install and configure plugins
+require("lazy").setup("plugins")
