@@ -42,7 +42,7 @@ return {
 
         mason.setup()
 
-        local function lsp_highlight_document(client)
+        local function lsp_highlight_document(client, bufnr)
             -- Set autocommands conditional on server_capabilities
             if client.server_capabilities.documentHighlightProvider then
                 vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
@@ -101,7 +101,7 @@ return {
 
         local function on_attach(client, bufnr)
             lsp_keymaps(bufnr)
-            lsp_highlight_document(client)
+            lsp_highlight_document(client, bufnr)
 
             if client.server_capabilities.documentFormattingProvider then
                 vim.api.nvim_create_autocmd("BufWritePre", {
