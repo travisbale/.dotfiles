@@ -2,8 +2,8 @@ return {
     "neovim/nvim-lspconfig",
 
     dependencies = {
-        "williamboman/mason.nvim",
-        { "williamboman/mason-lspconfig.nvim", config = function() end }, -- Bridges nvim-lspconfig with mason.nvim
+        "mason-org/mason.nvim",
+        { "mason-org/mason-lspconfig.nvim", config = function() end }, -- Bridges nvim-lspconfig with mason.nvim
     },
 
     config = function()
@@ -38,7 +38,6 @@ return {
         require("mason").setup()
 
         local mason = require("mason-lspconfig")
-        local lspconfig = require("lspconfig")
 
         mason.setup()
 
@@ -126,7 +125,7 @@ return {
                 opts = vim.tbl_deep_extend("force", custom_opts, opts)
             end
 
-            lspconfig[server].setup(opts)
+            vim.lsp.config(server, opts)
         end
     end,
 }
