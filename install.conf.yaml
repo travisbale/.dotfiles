@@ -11,6 +11,7 @@
     ~/.zprofile: zsh/.zprofile
     ~/.tmux.conf: tmux/.tmux.conf
     ~/.tmux/themes/onedark.tmux: tmux/onedark.tmux
+    ~/.config/alacritty/alacritty.toml: alacritty/alacritty.toml
     ~/.config/nvim/init.lua: nvim/init.lua
     ~/.config/nvim/ftplugin: nvim/ftplugin
     ~/.config/nvim/lua/config: nvim/config

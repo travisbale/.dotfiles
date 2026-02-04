@@ -1,5 +1,7 @@
 return {
-    "navarasu/onedark.nvim", -- Colorscheme
+    "navarasu/onedark.nvim",
+
+    version = "v0.1.0",
 
     config = function()
         require("onedark").setup({

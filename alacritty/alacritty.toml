@@ -1,0 +1,53 @@
+# Alacritty Configuration
+
+[window]
+opacity = 0.78
+padding = { x = 5, y = 5 }
+decorations = "full"
+title = "Terminal"
+
+[window.dimensions]
+columns = 140
+lines = 35
+
+[scrolling]
+history = 10000
+
+[font]
+size = 10.0
+
+[font.normal]
+family = "DroidSansMono Nerd Font"
+
+[colors.primary]
+background = "#000000"
+foreground = "#abb2bf"
+
+[colors.normal]
+black   = "#282c34"
+red     = "#e06c75"
+green   = "#98c379"
+yellow  = "#e5c07b"
+blue    = "#61afef"
+magenta = "#c678dd"
+cyan    = "#56b6c2"
+white   = "#abb2bf"
+
+[colors.bright]
+black   = "#5c6370"
+red     = "#e06c75"
+green   = "#98c379"
+yellow  = "#e5c07b"
+blue    = "#61afef"
+magenta = "#c678dd"
+cyan    = "#56b6c2"
+white   = "#ffffff"
+
+[cursor]
+style = { shape = "Block", blinking = "Off" }
+
+[selection]
+save_to_clipboard = true
+
+[mouse]
+hide_when_typing = true
