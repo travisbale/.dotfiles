@@ -1,6 +1,8 @@
 [user]
 	email = travis.bale@gmail.com
 	name = Travis Bale
+[include]
+	path = ~/.gitconfig.local
 [core]
 	editor = nvim
 	autocrlf = input
