@@ -3,7 +3,18 @@ return {
 
     dependencies = {
         "mason-org/mason.nvim",
-        { "mason-org/mason-lspconfig.nvim", config = function() end }, -- Bridges nvim-lspconfig with mason.nvim
+        { "mason-org/mason-lspconfig.nvim", config = function() end },
+        {
+            "WhoIsSethDaniel/mason-tool-installer.nvim",
+            opts = {
+                ensure_installed = {
+                    "markdownlint",
+                    "goimports",
+                    "stylua",
+                    "black",
+                },
+            },
+        },
     },
 
     config = function()
@@ -62,41 +73,29 @@ return {
         end
 
         local function lsp_keymaps(bufnr)
-            local opts = { noremap = true, silent = true }
-            vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-            vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-            vim.api.nvim_buf_set_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-            vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-            vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-Space>", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-            vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-            vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-            -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-            -- vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>f", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-            vim.api.nvim_buf_set_keymap(
-                bufnr,
-                "n",
-                "[d",
-                '<cmd>lua vim.diagnostic.goto_prev({ border = "rounded" })<CR>',
-                opts
-            )
-            vim.api.nvim_buf_set_keymap(
-                bufnr,
-                "n",
-                "gl",
-                '<cmd>lua vim.diagnostic.open_float({ border = "rounded", source = true })<CR>',
-                opts
-            )
-            vim.api.nvim_buf_set_keymap(
-                bufnr,
-                "n",
-                "]d",
-                '<cmd>lua vim.diagnostic.goto_next({ border = "rounded" })<CR>',
-                opts
-            )
-            vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>q", "<cmd>lua vim.diagnostic.setloclist()<CR>", opts)
-            vim.api.nvim_buf_set_keymap(bufnr, "n", "<C-q>", "<cmd>lua vim.diagnostic.setqflist()<CR>", opts)
+            local opts = { buffer = bufnr }
+            vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+            vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+            vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+            vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+            vim.keymap.set("n", "<C-Space>", vim.lsp.buf.signature_help, opts)
+            vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+            vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+            vim.keymap.set("n", "[d", function()
+                vim.diagnostic.goto_prev({ float = { border = "rounded" } })
+            end, opts)
+            vim.keymap.set("n", "gl", function()
+                vim.diagnostic.open_float({ border = "rounded", source = true })
+            end, opts)
+            vim.keymap.set("n", "]d", function()
+                vim.diagnostic.goto_next({ float = { border = "rounded" } })
+            end, opts)
+            vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
+            vim.keymap.set("n", "<C-q>", vim.diagnostic.setqflist, opts)
             vim.cmd([[ command! Format execute 'lua vim.lsp.buf.format()' ]])
         end
+
+        local format_augroup = vim.api.nvim_create_augroup("LspFormat", { clear = true })
 
         local function on_attach(client, bufnr)
             lsp_keymaps(bufnr)
@@ -104,7 +103,7 @@ return {
 
             if client.server_capabilities.documentFormattingProvider then
                 vim.api.nvim_create_autocmd("BufWritePre", {
-                    group = vim.api.nvim_create_augroup("Format", {}),
+                    group = format_augroup,
                     buffer = bufnr,
                     callback = function()
                         vim.lsp.buf.format()

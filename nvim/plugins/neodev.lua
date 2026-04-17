@@ -1,10 +1,11 @@
 return {
     -- Neovim config and plugin development
-    "folke/neodev.nvim",
+    "folke/lazydev.nvim",
+    ft = "lua",
 
-    config = function()
-        require("neodev").setup({
-            library = { plugins = { "neotest" }, types = true },
-        })
-    end,
+    opts = {
+        library = {
+            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+        },
+    },
 }

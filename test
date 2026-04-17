@@ -1,0 +1,139 @@
+#!/usr/bin/env bash
+
+# Smoke tests for dotfiles configuration.
+# Run after ./install to verify everything is wired up correctly.
+
+set -uo pipefail
+
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+passed=0
+failed=0
+
+pass() { echo "  PASS  $1"; ((passed++)) || true; }
+fail() { echo "  FAIL  $1"; ((failed++)) || true; }
+
+section() { echo ""; echo "[$1]"; }
+
+# ---------------------------------------------------------------------------
+# Symlinks
+# ---------------------------------------------------------------------------
+section "Symlinks"
+
+LINKS=(
+    ".gitconfig                         ~/.gitconfig"
+    "zsh/.zshrc                         ~/.zshrc"
+    "zsh/.zshenv                        ~/.zshenv"
+    "zsh/.zprofile                      ~/.zprofile"
+    "tmux/.tmux.conf                    ~/.tmux.conf"
+    "tmux/onedark.tmux                  ~/.tmux/themes/onedark.tmux"
+    "alacritty/alacritty.toml           ~/.config/alacritty/alacritty.toml"
+    "nvim/init.lua                      ~/.config/nvim/init.lua"
+    "nvim/ftplugin                      ~/.config/nvim/ftplugin"
+    "nvim/config                        ~/.config/nvim/lua/config"
+    "nvim/plugins                       ~/.config/nvim/lua/plugins"
+)
+
+for entry in "${LINKS[@]}"; do
+    read -r src dst <<< "$entry"
+    dst="${dst/#\~/$HOME}"
+    src="$DOTFILES/$src"
+
+    if [ -L "$dst" ] && [ "$(readlink -f "$dst")" = "$(readlink -f "$src")" ]; then
+        pass "$dst"
+    elif [ -L "$dst" ]; then
+        fail "$dst (symlink points to $(readlink "$dst"), expected $src)"
+    else
+        fail "$dst (not a symlink)"
+    fi
+done
+
+# ---------------------------------------------------------------------------
+# Zsh plugins
+# ---------------------------------------------------------------------------
+section "Zsh plugins"
+
+for plugin in zsh-autosuggestions zsh-syntax-highlighting; do
+    plugin_file="$DOTFILES/zsh/$plugin/$plugin.zsh"
+    if [ -f "$plugin_file" ]; then
+        pass "$plugin installed"
+    else
+        fail "$plugin not found at $plugin_file"
+    fi
+done
+
+# ---------------------------------------------------------------------------
+# Zsh syntax
+# ---------------------------------------------------------------------------
+section "Zsh config syntax"
+
+for file in .zshrc .zshenv .zprofile; do
+    if zsh -n "$DOTFILES/zsh/$file" 2>/dev/null; then
+        pass "$file parses OK"
+    else
+        fail "$file has syntax errors"
+    fi
+done
+
+# ---------------------------------------------------------------------------
+# Tmux config
+# ---------------------------------------------------------------------------
+section "Tmux config"
+
+# Use a dedicated socket so we don't touch the user's running tmux server
+tmux_socket="/tmp/tmux-dotfiles-test-$$"
+if tmux -L "$(basename "$tmux_socket")" -f "$DOTFILES/tmux/.tmux.conf" start-server \; kill-server 2>/dev/null; then
+    pass ".tmux.conf parses OK"
+else
+    fail ".tmux.conf has errors"
+fi
+
+# ---------------------------------------------------------------------------
+# Neovim
+# ---------------------------------------------------------------------------
+section "Neovim"
+
+if command -v nvim &>/dev/null; then
+    pass "nvim is installed ($(nvim --version | head -1))"
+else
+    fail "nvim not found on PATH"
+fi
+
+# Parse all Lua files in a single nvim invocation (fast — one process, no plugins loaded)
+section "Neovim Lua syntax"
+
+lua_check=$(mktemp)
+cat > "$lua_check" <<'EOF'
+local failed = 0
+for i = 1, #arg do
+    local file = arg[i]
+    local ok, err = loadfile(file)
+    if ok then
+        io.stdout:write("PASS\t" .. file .. "\n")
+    else
+        io.stdout:write("FAIL\t" .. file .. "\t" .. tostring(err) .. "\n")
+        failed = failed + 1
+    end
+end
+os.exit(failed > 0 and 1 or 0)
+EOF
+
+mapfile -t lua_files < <(find "$DOTFILES/nvim" -name '*.lua')
+while IFS=$'\t' read -r status file rest; do
+    name="${file#$DOTFILES/}"
+    if [ "$status" = "PASS" ]; then
+        pass "$name"
+    else
+        fail "$name: $rest"
+    fi
+done < <(nvim --headless -u NONE -l "$lua_check" "${lua_files[@]}" 2>&1)
+rm -f "$lua_check"
+
+# ---------------------------------------------------------------------------
+# Summary
+# ---------------------------------------------------------------------------
+echo ""
+echo "================================"
+echo "  $passed passed, $failed failed"
+echo "================================"
+
+[ "$failed" -eq 0 ] && exit 0 || exit 1

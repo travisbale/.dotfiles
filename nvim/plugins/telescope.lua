@@ -1,10 +1,18 @@
 return {
     "nvim-telescope/telescope.nvim",
-    "nvim-telescope/telescope-media-files.nvim",
-    "nvim-telescope/telescope-fzy-native.nvim",
+
+    dependencies = {
+        "nvim-telescope/telescope-fzy-native.nvim",
+    },
 
     config = function()
         require("telescope").setup({
+            extensions = {
+                fzy_native = {
+                    override_generic_sorter = true,
+                    override_file_sorter = true,
+                },
+            },
             pickers = {
                 find_files = {
                     hidden = true,
@@ -15,5 +23,7 @@ return {
                 },
             },
         })
+
+        require("telescope").load_extension("fzy_native")
     end,
 }

@@ -2,17 +2,105 @@
 
 set -e
 
-CONFIG="install.conf.yaml"
-DOTBOT_DIR="dotbot"
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+NEOVIM_VERSION="0.12.1"
 
-DOTBOT_BIN="bin/dotbot"
-BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Each line: source (relative to dotfiles) -> target (absolute)
+LINKS=(
+    ".gitconfig                         ~/.gitconfig"
+    "zsh/.zshrc                         ~/.zshrc"
+    "zsh/.zshenv                        ~/.zshenv"
+    "zsh/.zprofile                      ~/.zprofile"
+    "tmux/.tmux.conf                    ~/.tmux.conf"
+    "tmux/onedark.tmux                  ~/.tmux/themes/onedark.tmux"
+    "alacritty/alacritty.toml           ~/.config/alacritty/alacritty.toml"
+    "nvim/init.lua                      ~/.config/nvim/init.lua"
+    "nvim/ftplugin                      ~/.config/nvim/ftplugin"
+    "nvim/config                        ~/.config/nvim/lua/config"
+    "nvim/plugins                       ~/.config/nvim/lua/plugins"
+)
 
-cd "${BASEDIR}"
-git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
-git submodule update --init --recursive "${DOTBOT_DIR}"
+link() {
+    local src="$DOTFILES/$1"
+    local dst="${2/#\~/$HOME}"
+    local parent
+    parent="$(dirname "$dst")"
 
-"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+    if [ ! -e "$src" ]; then
+        echo "SKIP  $1 (source missing)"
+        return
+    fi
 
-echo -e "\nInstalling npm packages..."
-npm install
+    mkdir -p "$parent"
+
+    # Remove existing symlink or warn if a real file/dir is in the way
+    if [ -L "$dst" ]; then
+        rm "$dst"
+    elif [ -e "$dst" ]; then
+        echo "WARN  $dst exists and is not a symlink, skipping"
+        return
+    fi
+
+    ln -s "$src" "$dst"
+    echo "LINK  $dst -> $src"
+}
+
+clean_dead_symlinks() {
+    echo ""
+    echo "Cleaning dead symlinks in ~..."
+    local count=0
+    while IFS= read -r -d '' f; do
+        echo "CLEAN $f"
+        rm "$f"
+        ((count++))
+    done < <(find "$HOME" -maxdepth 1 -type l ! -exec test -e {} \; -print0 2>/dev/null)
+    [ "$count" -eq 0 ] && echo "  (none found)"
+}
+
+install_neovim() {
+    local current
+    current="$(nvim --version 2>/dev/null | head -1 | grep -oP 'v\K[0-9]+\.[0-9]+\.[0-9]+')" || true
+
+    if [ "$current" = "$NEOVIM_VERSION" ]; then
+        echo "Neovim v$NEOVIM_VERSION already installed"
+        return
+    fi
+
+    echo "Installing Neovim v$NEOVIM_VERSION..."
+    local arch
+    case "$(uname -m)" in
+        x86_64)  arch="x86_64" ;;
+        aarch64) arch="aarch64" ;;
+        armv7l)  arch="armv7l" ;;
+        *)       echo "ERROR: unsupported architecture $(uname -m)"; return 1 ;;
+    esac
+
+    local tarball="nvim-linux-${arch}.tar.gz"
+    local url="https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/${tarball}"
+    local tmp
+    tmp="$(mktemp -d)"
+
+    curl -fsSL "$url" | tar xz -C "$tmp"
+    sudo rm -rf /opt/nvim
+    sudo mv "$tmp/nvim-linux-${arch}" /opt/nvim
+    sudo ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
+    rm -rf "$tmp"
+
+    echo "Neovim v$NEOVIM_VERSION installed to /opt/nvim"
+}
+
+echo "Installing dotfiles..."
+echo ""
+
+for entry in "${LINKS[@]}"; do
+    read -r src dst <<< "$entry"
+    link "$src" "$dst"
+done
+
+clean_dead_symlinks
+
+echo ""
+install_neovim
+
+echo ""
+echo "Done!"

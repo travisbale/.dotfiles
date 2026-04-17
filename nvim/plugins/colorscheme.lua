@@ -31,9 +31,9 @@ return {
                 -- cyan = "#8ec07c",
             },
             highlights = {
-                TSConstructor = { fmt = "none" },
-                TSParameter = { fg = "$fg" },
-                TSPunctBracket = { fg = "$fg" },
+                ["@constructor"] = { fmt = "none" },
+                ["@variable.parameter"] = { fg = "$fg" },
+                ["@punctuation.bracket"] = { fg = "$fg" },
                 Whitespace = { fg = "$bg2" },
 
                 -- Transparent

@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+# Downloads pinned versions of zsh plugins and vendors them into zsh/.
+# Bump the version constants below and re-run to upgrade.
+
+set -euo pipefail
+
+ZSH_AUTOSUGGESTIONS_VERSION="v0.7.1"
+ZSH_SYNTAX_HIGHLIGHTING_VERSION="0.8.0"
+
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+download_tarball() {
+    local repo="$1" tag="$2" dest="$3"
+    local url="https://github.com/$repo/archive/refs/tags/$tag.tar.gz"
+    local tmp
+    tmp="$(mktemp -d)"
+
+    curl -fsSL "$url" | tar xz -C "$tmp"
+    rm -rf "$dest"
+    mv "$tmp"/*/ "$dest"
+    rm -rf "$tmp"
+}
+
+update_autosuggestions() {
+    local dest="$DOTFILES/zsh/zsh-autosuggestions"
+    echo "Updating zsh-autosuggestions to $ZSH_AUTOSUGGESTIONS_VERSION..."
+    download_tarball "zsh-users/zsh-autosuggestions" "$ZSH_AUTOSUGGESTIONS_VERSION" "$dest"
+
+    # Keep only what's needed at runtime
+    find "$dest" -mindepth 1 -maxdepth 1 \
+        ! -name "zsh-autosuggestions.zsh" \
+        ! -name "LICENSE" \
+        -exec rm -rf {} +
+}
+
+update_syntax_highlighting() {
+    local dest="$DOTFILES/zsh/zsh-syntax-highlighting"
+    echo "Updating zsh-syntax-highlighting to $ZSH_SYNTAX_HIGHLIGHTING_VERSION..."
+    download_tarball "zsh-users/zsh-syntax-highlighting" "$ZSH_SYNTAX_HIGHLIGHTING_VERSION" "$dest"
+
+    # Keep the main loader, the highlighters, and LICENSE
+    find "$dest" -mindepth 1 -maxdepth 1 \
+        ! -name "zsh-syntax-highlighting.zsh" \
+        ! -name "highlighters" \
+        ! -name "COPYING.md" \
+        -exec rm -rf {} +
+
+    # Drop test-data from every highlighter (tests aren't needed at runtime)
+    find "$dest/highlighters" -type d -name "test-data" -exec rm -rf {} +
+    find "$dest/highlighters" -type f -name "README.md" -delete
+}
+
+update_autosuggestions
+update_syntax_highlighting
+
+echo ""
+echo "Done. Review changes and commit."

@@ -132,7 +132,7 @@ local schemas = {
         url = "https://json.schemastore.org/feed.json",
         versions = {
             ["1"] = "https://json.schemastore.org/feed-1.json",
-            ["1.1"] = "https://json.schemastore.rg/feed.json",
+            ["1.1"] = "https://json.schemastore.org/feed.json",
         },
     },
     {
@@ -167,15 +167,6 @@ local opts = {
     settings = {
         json = {
             schemas = schemas,
-        },
-    },
-    setup = {
-        commands = {
-            Format = {
-                function()
-                    vim.lsp.buf.range_formatting({}, { 0, 0 }, { vim.fn.line("$"), 0 })
-                end,
-            },
         },
     },
 }

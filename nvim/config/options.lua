@@ -13,7 +13,6 @@ local options = {
     smartindent = true,
     listchars = "tab:→ ,trail:·,lead:·,nbsp:␣,multispace:·",
     list = true,
-    hidden = true,
     swapfile = false,
     splitbelow = true,
     splitright = true,
