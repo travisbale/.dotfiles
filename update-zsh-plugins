@@ -39,11 +39,14 @@ update_syntax_highlighting() {
     echo "Updating zsh-syntax-highlighting to $ZSH_SYNTAX_HIGHLIGHTING_VERSION..."
     download_tarball "zsh-users/zsh-syntax-highlighting" "$ZSH_SYNTAX_HIGHLIGHTING_VERSION" "$dest"
 
-    # Keep the main loader, the highlighters, and LICENSE
+    # Keep the main loader, the highlighters, LICENSE, and version metadata
+    # (zsh-syntax-highlighting.zsh reads .version and .revision-hash at load time)
     find "$dest" -mindepth 1 -maxdepth 1 \
         ! -name "zsh-syntax-highlighting.zsh" \
         ! -name "highlighters" \
         ! -name "COPYING.md" \
+        ! -name ".version" \
+        ! -name ".revision-hash" \
         -exec rm -rf {} +
 
     # Drop test-data from every highlighter (tests aren't needed at runtime)
