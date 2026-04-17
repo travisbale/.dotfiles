@@ -1,5 +1,4 @@
 [user]
-	email = travis.bale@gmail.com
 	name = Travis Bale
 [include]
 	path = ~/.gitconfig.local
