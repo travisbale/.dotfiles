@@ -10,7 +10,6 @@ Personal configuration files for a Linux development environment.
 | Zsh         | `zsh/`                |
 | Tmux        | `tmux/`               |
 | Alacritty   | `alacritty/`          |
-| VSCode      | `vscode/`             |
 | Git         | `.gitconfig`          |
 
 ## Install
