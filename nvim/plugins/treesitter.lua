@@ -6,9 +6,26 @@ return {
 
     config = function()
         require("nvim-treesitter").install({
-            "bash", "css", "go", "gomod", "gosum", "html", "javascript",
-            "json", "lua", "markdown", "markdown_inline", "proto", "python",
-            "ruby", "sql", "tsx", "typescript", "vim", "vimdoc", "vue", "yaml",
+            -- Shell / scripting
+            "bash",
+            -- Systems
+            "c", "cpp", "rust", "asm",
+            -- Web
+            "css", "html", "javascript", "jsdoc", "tsx", "typescript", "vue",
+            -- Compiled
+            "go", "gomod", "gosum", "java", "kotlin",
+            -- Dynamic
+            "lua", "python", "ruby", "php",
+            -- Config / data
+            "json", "yaml", "toml", "xml", "sql",
+            -- Infra / build
+            "dockerfile", "make", "cmake", "terraform", "hcl",
+            -- Docs
+            "markdown", "markdown_inline", "vim", "vimdoc",
+            -- Git
+            "diff", "gitcommit", "gitignore", "gitattributes", "git_config",
+            -- Misc
+            "proto", "regex", "comment",
         })
 
         -- Enable treesitter highlighting globally
