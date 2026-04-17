@@ -29,6 +29,7 @@ This symlinks configs into place and installs Neovim from the GitHub release pin
 | `./install`                      | Create symlinks, install Neovim                            |
 | `./scripts/test`                 | Smoke tests — symlinks, config syntax, Lua parse checks    |
 | `./scripts/update-zsh-plugins`   | Re-download pinned zsh plugin versions into `zsh/`         |
+| `./scripts/toggle-theme`         | Switch onedark ↔ gruvbox for Neovim and tmux               |
 
 ## Notes
 

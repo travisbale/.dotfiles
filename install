@@ -14,6 +14,8 @@ LINKS=(
     "tmux/.tmux.conf                    ~/.tmux.conf"
     "tmux/onedark.tmux                  ~/.tmux/themes/onedark.tmux"
     "alacritty/alacritty.toml           ~/.config/alacritty/alacritty.toml"
+    "alacritty/onedark.toml             ~/.config/alacritty/onedark.toml"
+    "alacritty/gruvbox.toml             ~/.config/alacritty/gruvbox.toml"
     "nvim/init.lua                      ~/.config/nvim/init.lua"
     "nvim/ftplugin                      ~/.config/nvim/ftplugin"
     "nvim/config                        ~/.config/nvim/lua/config"

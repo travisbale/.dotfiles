@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+# Toggles between onedark and gruvbox across Neovim and tmux configs.
+# Edits the source files in-place, then reloads tmux and any running
+# Neovim instances that expose an RPC server.
+
+set -euo pipefail
+
+DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+NVIM_CONFIG="$DOTFILES/nvim/plugins/colorscheme.lua"
+TMUX_CONFIG="$DOTFILES/tmux/onedark.tmux"
+ALACRITTY_CONFIG="$DOTFILES/alacritty/alacritty.toml"
+
+# Determine current theme (read from tmux config since it's canonical)
+current="$(grep -oE '^theme="[a-z]+"' "$TMUX_CONFIG" | cut -d'"' -f2)"
+
+case "$current" in
+    onedark) next="gruvbox" ;;
+    gruvbox) next="onedark" ;;
+    *)       echo "ERROR: could not determine current theme"; exit 1 ;;
+esac
+
+echo "Switching $current -> $next"
+
+# Update config files. Alacritty auto-reloads on change (live_config_reload).
+sed -i "s/^theme=\"$current\"/theme=\"$next\"/" "$TMUX_CONFIG"
+sed -i "s/local active_palette = \"$current\"/local active_palette = \"$next\"/" "$NVIM_CONFIG"
+sed -i "s|$current.toml|$next.toml|" "$ALACRITTY_CONFIG"
+
+# Reload tmux if the server is running
+if tmux info >/dev/null 2>&1; then
+    tmux source-file ~/.tmux.conf
+    echo "tmux reloaded"
+fi
+
+# Reload colorscheme in any running Neovim instances that expose an RPC socket
+# (nvim auto-creates these under /run/user/$UID/nvim.*.0)
+reloaded=0
+for sock in /run/user/$UID/nvim.*.0 /tmp/nvim.*.0; do
+    [ -S "$sock" ] || continue
+    # Re-execute the plugin spec file and call its config() to actually reapply the theme.
+    # :luafile on the file alone only evaluates the returned table — the config function
+    # never runs, so colors don't change.
+    cmd=":lua dofile('$NVIM_CONFIG').config()<CR>"
+    if nvim --server "$sock" --remote-send "$cmd" 2>/dev/null; then
+        reloaded=$((reloaded + 1))
+    fi
+done
+
+if [ "$reloaded" -gt 0 ]; then
+    echo "reloaded colorscheme in $reloaded running nvim instance(s)"
+else
+    echo "no running nvim instances found (or none with RPC sockets)"
+fi
