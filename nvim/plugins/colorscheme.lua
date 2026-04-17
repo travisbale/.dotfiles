@@ -31,9 +31,6 @@ return {
                 -- cyan = "#8ec07c",
             },
             highlights = {
-                ["@constructor"] = { fmt = "none" },
-                ["@variable.parameter"] = { fg = "$fg" },
-                ["@punctuation.bracket"] = { fg = "$fg" },
                 Whitespace = { fg = "$bg2" },
 
                 -- Transparent
