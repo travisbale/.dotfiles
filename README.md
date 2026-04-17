@@ -25,11 +25,11 @@ This symlinks configs into place and installs Neovim from the GitHub release pin
 
 ## Scripts
 
-| Script               | Purpose                                                     |
-| -------------------- | ----------------------------------------------------------- |
-| `./install`          | Create symlinks, install Neovim                             |
-| `./test`             | Smoke tests — symlinks, config syntax, Lua parse checks     |
-| `./update-zsh-plugins` | Re-download pinned zsh plugin versions into `zsh/`        |
+| Script                           | Purpose                                                    |
+| -------------------------------- | ---------------------------------------------------------- |
+| `./install`                      | Create symlinks, install Neovim                            |
+| `./scripts/test`                 | Smoke tests — symlinks, config syntax, Lua parse checks    |
+| `./scripts/update-zsh-plugins`   | Re-download pinned zsh plugin versions into `zsh/`         |
 
 ## Notes
 
