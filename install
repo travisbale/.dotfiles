@@ -57,6 +57,28 @@ clean_dead_symlinks() {
     [ "$count" -eq 0 ] && echo "  (none found)"
 }
 
+install_apt_packages() {
+    # Packages needed for various tools to work:
+    # - python3-venv: required by Mason to install black
+    # - ripgrep: required by Telescope's live_grep
+    # - fd-find: faster file search for Telescope (provides `fdfind` binary)
+    local packages=(python3-venv ripgrep fd-find)
+    local missing=()
+
+    for pkg in "${packages[@]}"; do
+        dpkg -s "$pkg" &>/dev/null || missing+=("$pkg")
+    done
+
+    if [ "${#missing[@]}" -eq 0 ]; then
+        echo "apt packages already installed: ${packages[*]}"
+        return
+    fi
+
+    echo "Installing apt packages: ${missing[*]}"
+    sudo apt-get update -qq
+    sudo apt-get install -y "${missing[@]}"
+}
+
 install_neovim() {
     local current
     current="$(nvim --version 2>/dev/null | head -1 | grep -oP 'v\K[0-9]+\.[0-9]+\.[0-9]+')" || true
@@ -98,6 +120,9 @@ for entry in "${LINKS[@]}"; do
 done
 
 clean_dead_symlinks
+
+echo ""
+install_apt_packages
 
 echo ""
 install_neovim
