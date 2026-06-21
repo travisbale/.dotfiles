@@ -61,10 +61,12 @@ clean_dead_symlinks() {
 
 install_apt_packages() {
     # Packages needed for various tools to work:
+    # - zsh: the login shell these dotfiles configure
     # - python3-venv: required by Mason to install black
     # - ripgrep: required by Telescope's live_grep
     # - fd-find: faster file search for Telescope (provides `fdfind` binary)
-    local packages=(python3-venv ripgrep fd-find)
+    # - gnupg: provides gpg for signing git commits
+    local packages=(zsh python3-venv ripgrep fd-find gnupg)
     local missing=()
 
     for pkg in "${packages[@]}"; do
@@ -113,6 +115,73 @@ install_neovim() {
     echo "Neovim v$NEOVIM_VERSION installed to /opt/nvim"
 }
 
+set_default_shell() {
+    local zsh_path
+    zsh_path="$(command -v zsh)" || { echo "zsh not found, skipping shell change"; return; }
+
+    if [ "$SHELL" = "$zsh_path" ] && [ "$(getent passwd "$USER" | cut -d: -f7)" = "$zsh_path" ]; then
+        echo "Default shell already zsh ($zsh_path)"
+        return
+    fi
+
+    echo "Setting default shell to $zsh_path..."
+    if chsh -s "$zsh_path"; then
+        echo "Default shell changed to zsh (restart your session to take effect)"
+    else
+        echo "WARN  chsh failed; run manually: chsh -s $zsh_path"
+    fi
+}
+
+setup_git_signing() {
+    local local_config="$HOME/.gitconfig.local"
+
+    if ! command -v gpg &>/dev/null; then
+        echo "WARN  gpg not found, skipping git signing key setup"
+        return
+    fi
+
+    # Skip if a signing key is already configured and still present in the keyring.
+    local existing_key
+    existing_key="$(git config --file "$local_config" --get user.signingkey 2>/dev/null)" || true
+    if [ -n "$existing_key" ] && gpg --list-secret-keys "$existing_key" &>/dev/null; then
+        echo "Git signing key already configured ($existing_key)"
+        return
+    fi
+
+    # Need an interactive terminal to prompt for the email.
+    if [ ! -t 0 ]; then
+        echo "WARN  non-interactive run, skipping git signing key setup"
+        return
+    fi
+
+    local email
+    read -rp "Email for git commits (used as git user.email and signing key UID): " email
+    if [ -z "$email" ]; then
+        echo "WARN  no email entered, skipping git signing key setup"
+        return
+    fi
+
+    local name
+    name="$(git config --get user.name)" || true
+    [ -z "$name" ] && name="$email"
+
+    echo "Generating ed25519 GPG signing key for $name <$email>..."
+    gpg --batch --passphrase '' --quick-generate-key "$name <$email>" ed25519 sign never
+
+    local keyid
+    keyid="$(gpg --list-secret-keys --with-colons "$email" | awk -F: '/^sec:/ {print $5; exit}')"
+    if [ -z "$keyid" ]; then
+        echo "WARN  could not determine generated key id, skipping git config"
+        return
+    fi
+
+    git config --file "$local_config" user.email "$email"
+    git config --file "$local_config" user.signingkey "$keyid"
+    echo "Git signing configured: $keyid ($email) -> $local_config"
+    echo "Add the public key to GitHub/GitLab with:"
+    echo "  gpg --armor --export $keyid"
+}
+
 echo "Installing dotfiles..."
 echo ""
 
@@ -128,6 +197,12 @@ install_apt_packages
 
 echo ""
 install_neovim
+
+echo ""
+set_default_shell
+
+echo ""
+setup_git_signing
 
 echo ""
 echo "Done!"
