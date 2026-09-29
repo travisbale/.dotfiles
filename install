@@ -144,9 +144,23 @@ install_apt_packages() {
         return
     fi
 
-    echo "Installing apt packages: ${missing[*]}"
     sudo apt-get update -qq
-    sudo apt-get install -y "${missing[@]}"
+
+    # Skip packages this distro doesn't carry rather than failing the whole
+    # install; whatever depends on them will just be unavailable.
+    local available=()
+    for pkg in "${missing[@]}"; do
+        if apt-cache policy "$pkg" 2>/dev/null | grep -q 'Candidate: [^(]'; then
+            available+=("$pkg")
+        else
+            echo "WARN  apt package $pkg not available, skipping"
+        fi
+    done
+
+    [ "${#available[@]}" -eq 0 ] && return
+
+    echo "Installing apt packages: ${available[*]}"
+    sudo apt-get install -y "${available[@]}"
 }
 
 install_neovim() {
