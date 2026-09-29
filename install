@@ -22,6 +22,42 @@ LINKS=(
     "nvim/plugins                       ~/.config/nvim/lua/plugins"
 )
 
+# Ask what to do about a real (non-symlink) file or dir sitting where we want
+# to create a symlink. Sets CONFLICT_RESULT to one of: backup | replace | skip.
+# Remembers an "all" choice in CONFLICT_ACTION so the user is only asked once if
+# they like. Uses a global rather than echoing so the remembered choice survives
+# (a $(...) subshell assignment would be lost).
+resolve_conflict() {
+    local dst="$1"
+
+    case "$CONFLICT_ACTION" in
+        backup-all)  CONFLICT_RESULT=backup;  return ;;
+        replace-all) CONFLICT_RESULT=replace; return ;;
+        skip-all)    CONFLICT_RESULT=skip;    return ;;
+    esac
+
+    # Non-interactive run: never destroy data silently, just skip.
+    if [ ! -t 0 ]; then
+        CONFLICT_RESULT=skip
+        return
+    fi
+
+    local choice
+    while true; do
+        printf '  %s exists and is not a symlink. [b]ackup / [r]eplace / [s]kip (append "a" for all: ba/ra/sa): ' "$dst" >&2
+        read -r choice
+        case "$choice" in
+            b|backup)       CONFLICT_RESULT=backup;  return ;;
+            r|replace)      CONFLICT_RESULT=replace; return ;;
+            s|skip|"")      CONFLICT_RESULT=skip;    return ;;
+            ba|backup-all)  CONFLICT_ACTION=backup-all;  CONFLICT_RESULT=backup;  return ;;
+            ra|replace-all) CONFLICT_ACTION=replace-all; CONFLICT_RESULT=replace; return ;;
+            sa|skip-all)    CONFLICT_ACTION=skip-all;    CONFLICT_RESULT=skip;    return ;;
+            *) echo "  Please answer b, r, or s (append 'a' to apply to all remaining)." >&2 ;;
+        esac
+    done
+}
+
 link() {
     local src="$DOTFILES/$1"
     local dst="${2/#\~/$HOME}"
@@ -35,12 +71,27 @@ link() {
 
     mkdir -p "$parent"
 
-    # Remove existing symlink or warn if a real file/dir is in the way
+    # Remove an existing symlink outright; for a real file/dir, ask the user
+    # whether to back it up, replace it, or skip.
     if [ -L "$dst" ]; then
         rm "$dst"
     elif [ -e "$dst" ]; then
-        echo "WARN  $dst exists and is not a symlink, skipping"
-        return
+        resolve_conflict "$dst"
+        case "$CONFLICT_RESULT" in
+            backup)
+                local backup="$dst.backup-$(date +%Y%m%d%H%M%S)"
+                mv "$dst" "$backup"
+                echo "BACKUP $dst -> $backup"
+                ;;
+            replace)
+                rm -rf "$dst"
+                echo "RM    $dst (replacing)"
+                ;;
+            skip)
+                echo "SKIP  $dst (exists, not a symlink)"
+                return
+                ;;
+        esac
     fi
 
     ln -s "$src" "$dst"
