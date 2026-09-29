@@ -4,6 +4,9 @@ set -e
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 NEOVIM_VERSION="0.12.1"
+# nvim-treesitter (main) requires tree-sitter-cli >= 0.26.1; distro packages lag
+# behind that, so it is installed from the GitHub release instead of apt.
+TREE_SITTER_VERSION="0.26.1"
 
 # Each line: source (relative to dotfiles) -> target (absolute)
 LINKS=(
@@ -126,13 +129,11 @@ install_apt_packages() {
     # - fd-find: faster file search for Telescope (provides `fdfind` binary)
     # - gnupg: provides gpg for signing git commits
     # - build-essential: provides gcc/cc to compile nvim-treesitter parsers
-    # - tree-sitter-cli: provides `tree-sitter`, used by nvim-treesitter (main
-    #   branch) to build parsers via `tree-sitter build`
     # - nodejs/npm: required by Mason to install markdownlint (and other JS tools)
     # - golang-go: provides go, required by Mason to install goimports
     # - unzip: required by Mason to extract stylua (and other zipped releases)
     # - fontconfig: provides fc-cache/fc-list to install and detect the nerd font
-    local packages=(zsh python3-venv ripgrep fd-find gnupg build-essential tree-sitter-cli nodejs npm golang-go unzip fontconfig)
+    local packages=(zsh python3-venv ripgrep fd-find gnupg build-essential nodejs npm golang-go unzip fontconfig)
     local missing=()
 
     for pkg in "${packages[@]}"; do
@@ -193,6 +194,51 @@ install_neovim() {
     rm -rf "$tmp"
 
     echo "Neovim v$NEOVIM_VERSION installed to /opt/nvim"
+}
+
+install_tree_sitter() {
+    local bin="/usr/local/bin/tree-sitter"
+    local current
+    current="$("$bin" --version 2>/dev/null | awk '{print $2}')" || true
+
+    if [ "$current" = "$TREE_SITTER_VERSION" ]; then
+        echo "tree-sitter v$TREE_SITTER_VERSION already installed"
+        return
+    fi
+
+    # The release binaries are linked against glibc 2.39. On older systems
+    # (e.g. Debian bookworm / Raspberry Pi OS) they won't run, so skip; Neovim
+    # then only uses the parsers it bundles.
+    local glibc
+    glibc="$(getconf GNU_LIBC_VERSION 2>/dev/null | awk '{print $2}')" || true
+    if [ -z "$glibc" ] || [ "$(printf '%s\n' 2.39 "$glibc" | sort -V | head -1)" != "2.39" ]; then
+        echo "WARN  tree-sitter v$TREE_SITTER_VERSION needs glibc >= 2.39 (have ${glibc:-unknown}), skipping"
+        return
+    fi
+
+    local arch
+    case "$(uname -m)" in
+        x86_64)  arch="x64" ;;
+        aarch64) arch="arm64" ;;
+        armv7l)  arch="arm" ;;
+        *)       echo "WARN  no tree-sitter release for $(uname -m), skipping"; return ;;
+    esac
+
+    echo "Installing tree-sitter v$TREE_SITTER_VERSION..."
+    local url="https://github.com/tree-sitter/tree-sitter/releases/download/v${TREE_SITTER_VERSION}/tree-sitter-linux-${arch}.gz"
+    local tmp
+    tmp="$(mktemp -d)"
+
+    if ! curl -fsSL "$url" | gunzip > "$tmp/tree-sitter"; then
+        echo "WARN  failed to download tree-sitter from $url"
+        rm -rf "$tmp"
+        return
+    fi
+
+    sudo install -m 755 "$tmp/tree-sitter" "$bin"
+    rm -rf "$tmp"
+
+    echo "tree-sitter v$TREE_SITTER_VERSION installed to $bin"
 }
 
 install_nerd_font() {
@@ -310,6 +356,9 @@ install_apt_packages
 
 echo ""
 install_neovim
+
+echo ""
+install_tree_sitter
 
 echo ""
 install_nerd_font
