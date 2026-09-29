@@ -71,6 +71,14 @@ link() {
 
     mkdir -p "$parent"
 
+    # Leave correct links untouched. Recreating them makes programs that watch
+    # their config (e.g. alacritty's live_config_reload) reload mid-install,
+    # while imported files like the theme are briefly missing.
+    if [ -L "$dst" ] && [ "$(readlink "$dst")" = "$src" ]; then
+        echo "OK    $dst"
+        return
+    fi
+
     # Remove an existing symlink outright; for a real file/dir, ask the user
     # whether to back it up, replace it, or skip.
     if [ -L "$dst" ]; then
