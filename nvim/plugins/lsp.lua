@@ -50,7 +50,15 @@ return {
 
         local mason = require("mason-lspconfig")
 
-        mason.setup()
+        mason.setup({
+            ensure_installed = {
+                "gopls",
+                "golangci_lint_ls",
+                "jsonls",
+                "lua_ls",
+                "pylsp",
+            },
+        })
 
         local function lsp_highlight_document(client, bufnr)
             -- Set autocommands conditional on server_capabilities
