@@ -1,5 +1,6 @@
 return {
     "neovim/nvim-lspconfig",
+    cond = not require("config.profile").minimal,
 
     dependencies = {
         "mason-org/mason.nvim",

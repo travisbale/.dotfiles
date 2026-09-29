@@ -22,11 +22,19 @@ cd ~/.dotfiles
 
 This symlinks configs into place and installs Neovim from the GitHub release pinned in the script.
 
+For machines that aren't used for development (e.g. a Raspberry Pi), use:
+
+```bash
+./install --minimal
+```
+
+This sets up the shell and Neovim with the same colorscheme, keymaps and Treesitter highlighting, but skips LSP servers, formatters, markdown-preview, the Go/Node toolchains, the Nerd Font and git signing, and builds a shorter parser list. The choice is recorded in `~/.config/nvim/.minimal`. To upgrade later, run `./install` again without the flag.
+
 ## Scripts
 
 | Script                           | Purpose                                                    |
 | -------------------------------- | ---------------------------------------------------------- |
-| `./install`                      | Create symlinks, install Neovim                            |
+| `./install [--minimal]`          | Create symlinks, install Neovim (`--minimal`: no dev tools) |
 | `./scripts/test`                 | Smoke tests — symlinks, config syntax, Lua parse checks    |
 | `./scripts/update-zsh-plugins`   | Re-download pinned zsh plugin versions into `zsh/`         |
 | `./scripts/toggle-theme`         | Switch onedark ↔ gruvbox for Neovim and tmux               |

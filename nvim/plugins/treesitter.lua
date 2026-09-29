@@ -21,6 +21,15 @@ local parsers = {
     "proto", "regex", "comment",
 }
 
+-- Minimal machines are for reading files, not developing, and every parser is
+-- compiled locally on first launch, so keep the list short there.
+local minimal_parsers = {
+    "bash", "c", "go", "python", "lua",
+    "json", "yaml", "toml", "dockerfile",
+    "markdown", "markdown_inline", "vim", "vimdoc",
+    "diff", "gitcommit", "git_config", "comment",
+}
+
 return {
     "nvim-treesitter/nvim-treesitter",
     branch = "main",
@@ -34,7 +43,8 @@ return {
         -- old for the release binary) parsers can't be built; fall back to the
         -- ones bundled with Neovim instead of erroring on every launch.
         if vim.fn.executable("tree-sitter") == 1 then
-            require("nvim-treesitter").install(parsers, { max_jobs = 1 })
+            local list = require("config.profile").minimal and minimal_parsers or parsers
+            require("nvim-treesitter").install(list, { max_jobs = 1 })
         end
 
         -- Enable treesitter highlighting globally
