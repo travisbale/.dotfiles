@@ -235,3 +235,8 @@ nvm() { lazy_nvm; nvm "$@"; }
 node() { lazy_nvm; node "$@"; }
 npm() { lazy_nvm; npm "$@"; }
 npx() { lazy_nvm; npx "$@"; }
+
+# PATH for the Google Cloud SDK is set in ~/.zshenv (guarded against duplicates).
+
+# Enable shell command completion for gcloud, if installed
+[ -f "$HOME/.local/share/google-cloud-sdk/completion.zsh.inc" ] && . "$HOME/.local/share/google-cloud-sdk/completion.zsh.inc"
