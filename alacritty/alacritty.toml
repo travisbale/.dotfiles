@@ -21,7 +21,7 @@ history = 10000
 size = 10.0
 
 [font.normal]
-family = "DroidSansMono Nerd Font"
+family = "DroidSansM Nerd Font Mono"
 
 [cursor]
 style = { shape = "Block", blinking = "Off" }

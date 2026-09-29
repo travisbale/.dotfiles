@@ -131,7 +131,8 @@ install_apt_packages() {
     # - nodejs/npm: required by Mason to install markdownlint (and other JS tools)
     # - golang-go: provides go, required by Mason to install goimports
     # - unzip: required by Mason to extract stylua (and other zipped releases)
-    local packages=(zsh python3-venv ripgrep fd-find gnupg build-essential tree-sitter-cli nodejs npm golang-go unzip)
+    # - fontconfig: provides fc-cache/fc-list to install and detect the nerd font
+    local packages=(zsh python3-venv ripgrep fd-find gnupg build-essential tree-sitter-cli nodejs npm golang-go unzip fontconfig)
     local missing=()
 
     for pkg in "${packages[@]}"; do
@@ -178,6 +179,39 @@ install_neovim() {
     rm -rf "$tmp"
 
     echo "Neovim v$NEOVIM_VERSION installed to /opt/nvim"
+}
+
+install_nerd_font() {
+    # Alacritty (alacritty/alacritty.toml) is configured to use
+    # "DroidSansMono Nerd Font"; install it so glyphs/icons render.
+    local font="DroidSansMono"
+    local font_dir="$HOME/.local/share/fonts"
+
+    if command -v fc-list &>/dev/null && \
+       fc-list 2>/dev/null | grep -qi "droidsansm.*nerd font"; then
+        echo "DroidSansMono Nerd Font already installed"
+        return
+    fi
+
+    echo "Installing DroidSansMono Nerd Font..."
+    local url="https://github.com/ryanoasis/nerd-fonts/releases/latest/download/${font}.zip"
+    local tmp
+    tmp="$(mktemp -d)"
+
+    if ! curl -fsSL "$url" -o "$tmp/${font}.zip"; then
+        echo "WARN  failed to download nerd font from $url"
+        rm -rf "$tmp"
+        return
+    fi
+
+    mkdir -p "$font_dir"
+    unzip -oq "$tmp/${font}.zip" -d "$font_dir" -x "*.md" "LICENSE*"
+    rm -rf "$tmp"
+
+    if command -v fc-cache &>/dev/null; then
+        fc-cache -f "$font_dir" >/dev/null 2>&1
+    fi
+    echo "DroidSansMono Nerd Font installed to $font_dir"
 }
 
 set_default_shell() {
@@ -262,6 +296,9 @@ install_apt_packages
 
 echo ""
 install_neovim
+
+echo ""
+install_nerd_font
 
 echo ""
 set_default_shell
