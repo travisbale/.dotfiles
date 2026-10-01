@@ -3,7 +3,9 @@
 set -e
 
 DOTFILES="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-NEOVIM_VERSION="0.12.1"
+# Neovim installs the latest stable release; this is only the fallback for
+# when the latest version can't be looked up (e.g. offline).
+NEOVIM_FALLBACK_VERSION="0.12.5"
 # nvim-treesitter (main) requires tree-sitter-cli >= 0.26.1; distro packages lag
 # behind that, so it is installed from the GitHub release instead of apt.
 TREE_SITTER_VERSION="0.26.1"
@@ -189,11 +191,25 @@ install_apt_packages() {
 }
 
 install_neovim() {
-    local current
+    # GitHub's releases/latest link redirects to the newest stable tag (never
+    # nightly), which avoids the rate-limited API.
+    local version current
+    version="$(curl -fsSLI -o /dev/null -w '%{url_effective}' https://github.com/neovim/neovim/releases/latest 2>/dev/null \
+        | grep -oP '/tag/v\K[0-9]+\.[0-9]+\.[0-9]+$')" || true
     current="$(nvim --version 2>/dev/null | head -1 | grep -oP 'v\K[0-9]+\.[0-9]+\.[0-9]+')" || true
 
-    if [ "$current" = "$NEOVIM_VERSION" ]; then
-        echo "Neovim v$NEOVIM_VERSION already installed"
+    if [ -z "$version" ]; then
+        # Keep an existing install rather than risk downgrading it.
+        if [ -n "$current" ]; then
+            echo "WARN  couldn't look up the latest Neovim release, keeping v$current"
+            return
+        fi
+        version="$NEOVIM_FALLBACK_VERSION"
+        echo "WARN  couldn't look up the latest Neovim release, using v$version"
+    fi
+
+    if [ "$current" = "$version" ]; then
+        echo "Neovim v$version already installed"
         return
     fi
 
@@ -205,9 +221,9 @@ install_neovim() {
         *)       echo "WARN  no Neovim release for $(uname -m), skipping"; return ;;
     esac
 
-    echo "Installing Neovim v$NEOVIM_VERSION..."
+    echo "Installing Neovim v$version..."
     local tarball="nvim-linux-${arch}.tar.gz"
-    local url="https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/${tarball}"
+    local url="https://github.com/neovim/neovim/releases/download/v${version}/${tarball}"
     local tmp
     tmp="$(mktemp -d)"
 
@@ -221,7 +237,7 @@ install_neovim() {
     sudo ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
     rm -rf "$tmp"
 
-    echo "Neovim v$NEOVIM_VERSION installed to /opt/nvim"
+    echo "Neovim v$version installed to /opt/nvim"
 }
 
 install_tree_sitter() {

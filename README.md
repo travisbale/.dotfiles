@@ -24,12 +24,12 @@ The script targets Debian/Ubuntu (it uses `apt`) and needs `sudo`. It:
 
 - symlinks the configs into place, asking whether to back up, replace or skip any real file already at a target
 - installs the apt packages the shell and Neovim tooling need (skipping any the distro doesn't provide)
-- installs Neovim and `tree-sitter-cli` from the GitHub releases pinned at the top of the script
+- installs the latest stable Neovim, and the `tree-sitter-cli` version pinned at the top of the script, from their GitHub releases
 - installs the DroidSansMono Nerd Font used by Alacritty
 - sets zsh as the default shell
 - generates a GPG key for signed git commits, stored in `~/.gitconfig.local` (prompts for your email)
 
-It is safe to re-run: steps that are already done are skipped. To upgrade Neovim or tree-sitter, bump `NEOVIM_VERSION` / `TREE_SITTER_VERSION` and run it again.
+It is safe to re-run: steps that are already done are skipped. Re-running also upgrades Neovim to the latest stable release. To upgrade tree-sitter, bump `TREE_SITTER_VERSION` and run it again.
 
 The prebuilt `tree-sitter` binary needs glibc 2.39 or newer. On older systems (e.g. Debian bookworm, Raspberry Pi OS) the script skips it, and Neovim uses its built-in parsers instead of building more.
 
