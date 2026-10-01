@@ -197,21 +197,25 @@ install_neovim() {
         return
     fi
 
-    echo "Installing Neovim v$NEOVIM_VERSION..."
+    # Release tarballs only exist for these two; there is no 32-bit ARM build.
     local arch
     case "$(uname -m)" in
         x86_64)  arch="x86_64" ;;
-        aarch64) arch="aarch64" ;;
-        armv7l)  arch="armv7l" ;;
-        *)       echo "ERROR: unsupported architecture $(uname -m)"; return 1 ;;
+        aarch64) arch="arm64" ;;
+        *)       echo "WARN  no Neovim release for $(uname -m), skipping"; return ;;
     esac
 
+    echo "Installing Neovim v$NEOVIM_VERSION..."
     local tarball="nvim-linux-${arch}.tar.gz"
     local url="https://github.com/neovim/neovim/releases/download/v${NEOVIM_VERSION}/${tarball}"
     local tmp
     tmp="$(mktemp -d)"
 
-    curl -fsSL "$url" | tar xz -C "$tmp"
+    if ! curl -fsSL "$url" | tar xz -C "$tmp"; then
+        echo "WARN  failed to download Neovim from $url"
+        rm -rf "$tmp"
+        return
+    fi
     sudo rm -rf /opt/nvim
     sudo mv "$tmp/nvim-linux-${arch}" /opt/nvim
     sudo ln -sf /opt/nvim/bin/nvim /usr/local/bin/nvim
