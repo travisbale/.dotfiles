@@ -352,6 +352,15 @@ set_default_shell() {
     fi
 }
 
+# .gitconfig only sends pushes to GitHub over SSH, so machines without a key
+# can still pull public repos over HTTPS. Development machines also need
+# fetches over SSH: Go downloads private modules (GOPRIVATE) via https URLs,
+# which only authenticate once rewritten to SSH.
+setup_git_ssh_fetch() {
+    git config --file "$HOME/.gitconfig.local" url."ssh://git@github.com".insteadOf https://github.com
+    echo "Git fetches from GitHub over SSH (set in ~/.gitconfig.local)"
+}
+
 setup_git_signing() {
     local local_config="$HOME/.gitconfig.local"
 
@@ -439,6 +448,9 @@ echo ""
 set_default_shell
 
 if [ "$FULL" = true ]; then
+    echo ""
+    setup_git_ssh_fetch
+
     echo ""
     setup_git_signing
 fi

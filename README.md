@@ -34,6 +34,7 @@ That gives Neovim the same colorscheme, keymaps and Treesitter highlighting ever
 - the Go, Node and Python toolchains Mason uses to install LSP servers, formatters and linters
 - the DroidSansMono Nerd Font used by Alacritty (fonts are drawn by the terminal you're looking at, so a machine you only reach over SSH doesn't need it)
 - a GPG key for signed git commits, stored in `~/.gitconfig.local` (prompts for your email)
+- git fetches from GitHub over SSH, for private repos and Go modules
 
 Neovim turns on its development plugins (everything in `nvim/plugins/dev/`) and builds its full parser list only when it finds `go` and `npm`, so there is no profile to keep track of. To upgrade a machine later, run `./install --full`.
 
@@ -67,6 +68,7 @@ This upgrades Neovim to the latest stable release on any machine, without needin
 - **Zsh plugins** (`zsh-autosuggestions`, `zsh-syntax-highlighting`) are vendored in `zsh/` at pinned versions. Bump the constants in `update-zsh-plugins` and re-run it to upgrade.
 - **Optional tools** (Go, Cargo, nvm, the Google Cloud SDK) are wired into the shell only if they are installed, so the same config works on machines without them. When installing a tool like gcloud, decline its offer to edit `~/.zshrc` — that file is a symlink into this repo — and add a guarded hook here instead.
 - **Machine-specific git settings** (email, signing key) live in `~/.gitconfig.local`, which `.gitconfig` includes and is not versioned.
+- **GitHub over SSH:** `.gitconfig` sends only pushes over SSH, so machines without a key can still pull public repos over HTTPS. `./install --full` also routes fetches over SSH (in `~/.gitconfig.local`), which Go needs to download private modules.
 - **Machine-specific shell settings** go in `~/.zshrc.local`, which `.zshrc` sources last and is not versioned. Install creates it from `zsh/.zshrc.local.example` if it doesn't exist, and never overwrites it. The example lists prompt color pairs: `PROMPT_COLOR` (the prompt's lines, default green) and `PROMPT_HOST_COLOR` (user@host and the `$`, default cyan), so you can tell machines apart at a glance.
 - **Adding a new symlink:** add a line to the `LINKS` array at the top of `install`.
 - **Adding a development-only plugin:** put its spec in `nvim/plugins/dev/`. Plugins anywhere else in `nvim/plugins/` load on every machine.
