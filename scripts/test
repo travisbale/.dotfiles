@@ -19,19 +19,9 @@ section() { echo ""; echo "[$1]"; }
 # ---------------------------------------------------------------------------
 section "Symlinks"
 
-LINKS=(
-    ".gitconfig                         ~/.gitconfig"
-    "zsh/.zshrc                         ~/.zshrc"
-    "zsh/.zshenv                        ~/.zshenv"
-    "zsh/.zprofile                      ~/.zprofile"
-    "tmux/.tmux.conf                    ~/.tmux.conf"
-    "tmux/onedark.tmux                  ~/.tmux/themes/onedark.tmux"
-    "alacritty/alacritty.toml           ~/.config/alacritty/alacritty.toml"
-    "nvim/init.lua                      ~/.config/nvim/init.lua"
-    "nvim/ftplugin                      ~/.config/nvim/ftplugin"
-    "nvim/config                        ~/.config/nvim/lua/config"
-    "nvim/plugins                       ~/.config/nvim/lua/plugins"
-)
+# Read the link list from install so the two can't drift apart
+mapfile -t LINKS < <(sed -n '/^LINKS=(/,/^)/s/^ *"\(.*\)"$/\1/p' "$DOTFILES/install")
+[ "${#LINKS[@]}" -gt 0 ] || fail "could not read LINKS from install"
 
 for entry in "${LINKS[@]}"; do
     read -r src dst <<< "$entry"
