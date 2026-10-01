@@ -32,7 +32,7 @@ The script targets Debian/Ubuntu (it uses `apt`) and needs `sudo`. By default it
 That gives Neovim the same colorscheme, keymaps and Treesitter highlighting everywhere, which suits machines that aren't used for development, like a Raspberry Pi. `--full` adds:
 
 - the Go, Node and Python toolchains Mason uses to install LSP servers, formatters and linters
-- the DroidSansMono Nerd Font used by Alacritty (fonts are drawn by the terminal you're looking at, so a machine you only reach over SSH doesn't need it)
+- the DroidSansMono Nerd Font used by Alacritty, if Alacritty is installed (fonts are drawn by the terminal you're looking at, so a machine you only connect to, like a container or SSH host, doesn't need it)
 - a GPG key for signed git commits, stored in `~/.gitconfig.local` (prompts for your email)
 - git fetches from GitHub over SSH, for private repos and Go modules
 

@@ -12,7 +12,7 @@ TREE_SITTER_VERSION="0.26.1"
 
 # By default this sets up the shell and a lightweight Neovim. --full adds the
 # development tooling: the Go/Node toolchains Mason needs for LSP servers and
-# formatters, the nerd font and git signing. Neovim enables its dev plugins
+# formatters, the nerd font (if alacritty is installed) and git signing. Neovim enables its dev plugins
 # when it finds that toolchain, so running with --full later is the upgrade.
 FULL=false
 for arg in "$@"; do
@@ -167,13 +167,12 @@ install_apt_packages() {
     # - nodejs/npm: required by Mason to install markdownlint (and other JS tools)
     # - golang-go: provides go, required by Mason to install goimports
     # - unzip: required by Mason to extract stylua (and other zipped releases)
-    # - fontconfig: provides fc-cache/fc-list to install and detect the nerd font
     #
     # Without --full, keep only what the shell and Telescope need, plus gcc so
     # Neovim can still build its (shorter) parser list.
     local packages
     if [ "$FULL" = true ]; then
-        packages=(zsh python3-venv ripgrep fd-find gnupg build-essential nodejs npm golang-go unzip fontconfig)
+        packages=(zsh python3-venv ripgrep fd-find gnupg build-essential nodejs npm golang-go unzip)
     else
         packages=(zsh ripgrep fd-find gcc)
     fi
@@ -304,12 +303,18 @@ install_tree_sitter() {
 
 install_nerd_font() {
     # Alacritty (alacritty/alacritty.toml) is configured to use
-    # "DroidSansMono Nerd Font"; install it so glyphs/icons render.
+    # "DroidSansMono Nerd Font"; install it so glyphs/icons render. Fonts are
+    # drawn by the terminal on the machine you're looking at, so machines you
+    # only connect to (over SSH, lxc exec, ...) don't need it.
+    if ! command -v alacritty &>/dev/null; then
+        echo "alacritty not installed, skipping nerd font"
+        return
+    fi
+
     local font="DroidSansMono"
     local font_dir="$HOME/.local/share/fonts"
 
-    if command -v fc-list &>/dev/null && \
-       fc-list 2>/dev/null | grep -qi "droidsansm.*nerd font"; then
+    if compgen -G "$font_dir/DroidSansMNerdFont*" >/dev/null; then
         echo "DroidSansMono Nerd Font already installed"
         return
     fi
@@ -437,8 +442,8 @@ install_neovim
 echo ""
 install_tree_sitter
 
-# The font only matters on a machine running alacritty, and signing only on a
-# machine you commit from, so only a full install sets them up.
+# Signing only matters on a machine you commit from, so only a full install
+# sets it up, along with the font (which also needs alacritty).
 if [ "$FULL" = true ]; then
     echo ""
     install_nerd_font
