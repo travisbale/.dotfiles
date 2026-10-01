@@ -1,6 +1,5 @@
 return {
     "nvimtools/none-ls.nvim",
-    cond = not require("config.profile").minimal,
 
     config = function()
         local null_ls = require("null-ls")

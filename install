@@ -10,16 +10,17 @@ NEOVIM_FALLBACK_VERSION="0.12.5"
 # behind that, so it is installed from the GitHub release instead of apt.
 TREE_SITTER_VERSION="0.26.1"
 
-# --minimal sets up the shell and a lightweight Neovim (no LSP servers,
-# formatters or the Go/Node toolchains they need) for machines that aren't used
-# for development. Running without it later upgrades to the full install.
-MINIMAL=false
+# By default this sets up the shell and a lightweight Neovim. --full adds the
+# development tooling: the Go/Node toolchains Mason needs for LSP servers and
+# formatters, the nerd font and git signing. Neovim enables its dev plugins
+# when it finds that toolchain, so running with --full later is the upgrade.
+FULL=false
 for arg in "$@"; do
     case "$arg" in
-        --minimal) MINIMAL=true ;;
+        --full) FULL=true ;;
         -h|--help)
-            echo "Usage: $0 [--minimal]"
-            echo "  --minimal  shell + lightweight Neovim only; rerun without it to upgrade"
+            echo "Usage: $0 [--full]"
+            echo "  --full  also install the development tooling (LSP servers, formatters, etc.)"
             exit 0
             ;;
         *) echo "Unknown option: $arg (see --help)" >&2; exit 1 ;;
@@ -152,13 +153,13 @@ install_apt_packages() {
     # - unzip: required by Mason to extract stylua (and other zipped releases)
     # - fontconfig: provides fc-cache/fc-list to install and detect the nerd font
     #
-    # A minimal install keeps only what the shell and Telescope need, plus gcc
-    # so Neovim can still build its (shorter) parser list.
+    # Without --full, keep only what the shell and Telescope need, plus gcc so
+    # Neovim can still build its (shorter) parser list.
     local packages
-    if [ "$MINIMAL" = true ]; then
-        packages=(zsh ripgrep fd-find gcc)
-    else
+    if [ "$FULL" = true ]; then
         packages=(zsh python3-venv ripgrep fd-find gnupg build-essential nodejs npm golang-go unzip fontconfig)
+    else
+        packages=(zsh ripgrep fd-find gcc)
     fi
     local missing=()
 
@@ -318,22 +319,6 @@ install_nerd_font() {
     echo "DroidSansMono Nerd Font installed to $font_dir"
 }
 
-# Neovim reads this marker (nvim/config/profile.lua) to skip the development
-# tooling. Removing it on a full install is what makes rerunning without
-# --minimal an upgrade.
-set_nvim_profile() {
-    local marker="$HOME/.config/nvim/.minimal"
-
-    if [ "$MINIMAL" = true ]; then
-        mkdir -p "$(dirname "$marker")"
-        touch "$marker"
-        echo "Neovim profile: minimal"
-    else
-        rm -f "$marker"
-        echo "Neovim profile: full"
-    fi
-}
-
 set_default_shell() {
     local zsh_path
     zsh_path="$(command -v zsh)" || { echo "zsh not found, skipping shell change"; return; }
@@ -401,8 +386,8 @@ setup_git_signing() {
     echo "  gpg --armor --export $keyid"
 }
 
-if [ "$MINIMAL" = true ]; then
-    echo "Installing dotfiles (minimal)..."
+if [ "$FULL" = true ]; then
+    echo "Installing dotfiles (full)..."
 else
     echo "Installing dotfiles..."
 fi
@@ -424,12 +409,9 @@ install_neovim
 echo ""
 install_tree_sitter
 
-echo ""
-set_nvim_profile
-
 # The font only matters on a machine running alacritty, and signing only on a
-# machine you commit from, so a minimal install skips both.
-if [ "$MINIMAL" = false ]; then
+# machine you commit from, so only a full install sets them up.
+if [ "$FULL" = true ]; then
     echo ""
     install_nerd_font
 fi
@@ -437,7 +419,7 @@ fi
 echo ""
 set_default_shell
 
-if [ "$MINIMAL" = false ]; then
+if [ "$FULL" = true ]; then
     echo ""
     setup_git_signing
 fi

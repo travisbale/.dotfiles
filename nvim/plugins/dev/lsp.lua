@@ -1,6 +1,5 @@
 return {
     "neovim/nvim-lspconfig",
-    cond = not require("config.profile").minimal,
 
     dependencies = {
         "mason-org/mason.nvim",
@@ -127,7 +126,7 @@ return {
                 capabilities = require("cmp_nvim_lsp").default_capabilities(),
             }
 
-            local has_custom_opts, custom_opts = pcall(require, "plugins.lsp." .. server)
+            local has_custom_opts, custom_opts = pcall(require, "plugins.dev.lsp." .. server)
 
             if has_custom_opts then
                 opts = vim.tbl_deep_extend("force", custom_opts, opts)

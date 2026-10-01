@@ -43,7 +43,7 @@ return {
         -- old for the release binary) parsers can't be built; fall back to the
         -- ones bundled with Neovim instead of erroring on every launch.
         if vim.fn.executable("tree-sitter") == 1 then
-            local list = require("config.profile").minimal and minimal_parsers or parsers
+            local list = vim.g.dev_tools and parsers or minimal_parsers
             require("nvim-treesitter").install(list, { max_jobs = 1 })
         end
 
