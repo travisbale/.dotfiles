@@ -140,6 +140,22 @@ clean_dead_symlinks() {
     [ "$count" -eq 0 ] && echo "  (none found)"
 }
 
+# Seed machine-specific files from their versioned examples. These are copied,
+# not linked, so local edits never show up as diffs in the repo, and an
+# existing file is never overwritten.
+copy_local_examples() {
+    local src="$DOTFILES/zsh/.zshrc.local.example"
+    local dst="$HOME/.zshrc.local"
+
+    if [ -e "$dst" ]; then
+        echo "OK    $dst (exists, leaving it alone)"
+        return
+    fi
+
+    cp "$src" "$dst"
+    echo "COPY  $dst (from ${src#$DOTFILES/})"
+}
+
 install_apt_packages() {
     # Packages needed for various tools to work:
     # - zsh: the login shell these dotfiles configure
@@ -399,6 +415,9 @@ for entry in "${LINKS[@]}"; do
 done
 
 clean_dead_symlinks
+
+echo ""
+copy_local_examples
 
 echo ""
 install_apt_packages

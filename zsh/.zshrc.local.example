@@ -1,0 +1,27 @@
+# Machine-specific shell settings, sourced last by ~/.zshrc. This file is not
+# versioned: install copies it to ~/.zshrc.local on machines that don't have
+# one yet, and never overwrites it after that.
+
+# Prompt colors, so you can tell at a glance which machine a shell is on.
+# PROMPT_COLOR is the frame (lines and colon), PROMPT_HOST_COLOR is user@host
+# and the $. Each takes a zsh color name or a 256-color number (0-255).
+# Red and yellow are best avoided: red marks root shells and errors, and yellow
+# is the git branch. Uncomment one pair:
+
+# Default: green frame, cyan user@host
+# PROMPT_COLOR=green;   PROMPT_HOST_COLOR=cyan
+
+# Magenta
+# PROMPT_COLOR=magenta; PROMPT_HOST_COLOR=magenta
+
+# Orange
+# PROMPT_COLOR=208;     PROMPT_HOST_COLOR=208
+
+# Purple
+# PROMPT_COLOR=141;     PROMPT_HOST_COLOR=141
+
+# Blue frame, cyan user@host
+# PROMPT_COLOR=blue;    PROMPT_HOST_COLOR=cyan
+
+# Teal frame, white user@host
+# PROMPT_COLOR=37;      PROMPT_HOST_COLOR=white

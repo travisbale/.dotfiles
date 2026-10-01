@@ -56,7 +56,7 @@ done
 # ---------------------------------------------------------------------------
 section "Zsh config syntax"
 
-for file in .zshrc .zshenv .zprofile; do
+for file in .zshrc .zshenv .zprofile .zshrc.local.example; do
     if zsh -n "$DOTFILES/zsh/$file" 2>/dev/null; then
         pass "$file parses OK"
     else
