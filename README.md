@@ -66,6 +66,7 @@ This upgrades Neovim to the latest stable release on any machine, without needin
 - **Zsh plugins** (`zsh-autosuggestions`, `zsh-syntax-highlighting`) are vendored in `zsh/` at pinned versions. Bump the constants in `update-zsh-plugins` and re-run it to upgrade.
 - **Optional tools** (Go, Cargo, nvm, the Google Cloud SDK) are wired into the shell only if they are installed, so the same config works on machines without them. When installing a tool like gcloud, decline its offer to edit `~/.zshrc` — that file is a symlink into this repo — and add a guarded hook here instead.
 - **Machine-specific git settings** (email, signing key) live in `~/.gitconfig.local`, which `.gitconfig` includes and is not versioned.
+- **Machine-specific shell settings** go in `~/.zshrc.local`, which `.zshrc` sources last and is not versioned. For example, `PROMPT_COLOR` (the prompt's lines, default green) and `PROMPT_HOST_COLOR` (user@host and the `$`, default cyan) let you tell machines apart; set both to the same color for a one-color prompt. Either takes a zsh color name or a 256-color number.
 - **Adding a new symlink:** add a line to the `LINKS` array at the top of `install`.
 - **Adding a development-only plugin:** put its spec in `nvim/plugins/dev/`. Plugins anywhere else in `nvim/plugins/` load on every machine.
 - **Adding an LSP server:** add a new file at `nvim/plugins/dev/lsp/<server>.lua` returning the options table. `plugins/dev/lsp.lua` auto-loads any Mason-installed server with a matching config file.

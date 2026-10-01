@@ -61,8 +61,13 @@ fi
 # override default virtualenv indicator in prompt
 VIRTUAL_ENV_DISABLE_PROMPT=1
 venv_info() {
-    [ $VIRTUAL_ENV ] && echo "(%B%F{reset}$(basename $VIRTUAL_ENV)%b%F{%(#.cyan.green)})"
+    [ $VIRTUAL_ENV ] && echo "(%B%F{reset}$(basename $VIRTUAL_ENV)%b%F{%(#.blue.${PROMPT_COLOR:-green})})"
 }
+
+# Per-machine prompt colors, so each machine can be told apart at a glance:
+# PROMPT_COLOR for the frame (default green) and PROMPT_HOST_COLOR for user@host
+# and the $ (default cyan). Set them in ~/.zshrc.local. They are read every time
+# the prompt is drawn, so changing them takes effect immediately.
 
 # set a fancy prompt (non-color, unless we know we "want" color)
 case "$TERM" in
@@ -95,7 +100,7 @@ zstyle ':vcs_info:git:*' formats '[%b] %u%c'
 if [ "$color_prompt" = yes ]; then
     #PROMPT=$'%F{%(#.cyan.green)}┌──${debian_chroot:+($debian_chroot)──}$(venv_info)(%B%F{%(#.red.cyan)}%n%(#.💀.㉿)%m%b%F{%(#.cyan.green)})-[%B%F{reset}%(6~.%-1~/…/%4~.%5~)%b%F{%(#.cyan.green)}]\n└─%B%(#.%F{red}#.%F{cyan}$)%b%F{reset} '
     #RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
-    PROMPT=$'%F{%(#.blue.green)}┌──${debian_chroot:+($debian_chroot)──}$(venv_info) %F{%(#.red.cyan)}%n%(#.💀.@)%m%F{%(#.blue.green)}:%F{reset}%(6~.%-1~/…/%4~.%5~)%F{%(#.blue.green)} %F{yellow}\$vcs_info_msg_0_%b\n%F{%(#.blue.green)}└─%(#.%F{red}#.%F{cyan}$)%F{reset} '
+    PROMPT=$'%F{%(#.blue.${PROMPT_COLOR:-green})}┌──${debian_chroot:+($debian_chroot)──}$(venv_info) %F{%(#.red.${PROMPT_HOST_COLOR:-cyan})}%n%(#.💀.@)%m%F{%(#.blue.${PROMPT_COLOR:-green})}:%F{reset}%(6~.%-1~/…/%4~.%5~)%F{%(#.blue.${PROMPT_COLOR:-green})} %F{yellow}\$vcs_info_msg_0_%b\n%F{%(#.blue.${PROMPT_COLOR:-green})}└─%(#.%F{red}#.%F{${PROMPT_HOST_COLOR:-cyan}}$)%F{reset} '
     RPROMPT=$'%(?.. %? %F{red}%B⨯%b%F{reset})%(1j. %j %F{yellow}%B⚙%b%F{reset}.)'
 
     # enable syntax-highlighting
@@ -240,3 +245,6 @@ npx() { lazy_nvm; npx "$@"; }
 
 # Enable shell command completion for gcloud, if installed
 [ -f "$HOME/.local/share/google-cloud-sdk/completion.zsh.inc" ] && . "$HOME/.local/share/google-cloud-sdk/completion.zsh.inc"
+
+# Machine-specific settings (e.g. PROMPT_COLOR), not versioned
+[ -f "$HOME/.zshrc.local" ] && . "$HOME/.zshrc.local"
