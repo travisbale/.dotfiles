@@ -4,9 +4,24 @@
 
 # Prompt colors, so you can tell at a glance which machine a shell is on.
 # PROMPT_COLOR is the frame (lines and colon), PROMPT_HOST_COLOR is user@host
-# and the $. Each takes a zsh color name or a 256-color number (0-255).
-# Red and yellow are best avoided: red marks root shells and errors, and yellow
-# is the git branch. Uncomment one pair:
+# and the $. Red and yellow are best avoided: red marks root shells and errors,
+# and yellow is the git branch.
+#
+# Each takes a color name or a number from 0 to 255:
+#
+#   Names:  black  red  green  yellow  blue  magenta  cyan  white
+#
+#   0-7     the eight named colors, in that order
+#   8-15    bright versions of the same eight
+#   16-231  a 6x6x6 color cube
+#   232-255 grayscale, dark to light
+#
+# Exact shades depend on your terminal theme. To see every number drawn in its
+# own color, run this in zsh:
+#
+#   for i in {0..255}; do print -Pn "%F{$i}${(l:3::0:)i}%f "; (( (i + 1) % 16 )) || print; done
+#
+# Uncomment one pair below, or write your own:
 
 # Default: green frame, cyan user@host
 # PROMPT_COLOR=green;   PROMPT_HOST_COLOR=cyan
