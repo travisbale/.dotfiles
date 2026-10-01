@@ -31,14 +31,25 @@ The script targets Debian/Ubuntu (it uses `apt`) and needs `sudo`. By default it
 That gives Neovim the same colorscheme, keymaps and Treesitter highlighting everywhere, which suits machines that aren't used for development, like a Raspberry Pi. `--full` adds:
 
 - the Go, Node and Python toolchains Mason uses to install LSP servers, formatters and linters
-- the DroidSansMono Nerd Font used by Alacritty
+- the DroidSansMono Nerd Font used by Alacritty (fonts are drawn by the terminal you're looking at, so a machine you only reach over SSH doesn't need it)
 - a GPG key for signed git commits, stored in `~/.gitconfig.local` (prompts for your email)
 
 Neovim turns on its development plugins (everything in `nvim/plugins/dev/`) and builds its full parser list only when it finds `go` and `npm`, so there is no profile to keep track of. To upgrade a machine later, run `./install --full`.
 
-It is safe to re-run: steps that are already done are skipped, and nothing is uninstalled, so running without `--full` on a machine that had it changes nothing. Re-running also upgrades Neovim to the latest stable release. To upgrade tree-sitter, bump `TREE_SITTER_VERSION` and run it again.
+It is safe to re-run: steps that are already done are skipped, and nothing is uninstalled, so running without `--full` on a machine that had it changes nothing.
 
 The prebuilt `tree-sitter` binary needs glibc 2.39 or newer. On older systems (e.g. Debian bookworm) the script skips it, and Neovim uses its built-in parsers instead of building more.
+
+## Updating
+
+```bash
+cd ~/.dotfiles && git pull && ./install
+```
+
+This upgrades Neovim to the latest stable release on any machine, without needing `--full` again. Two things it doesn't update:
+
+- **Plugins and parsers**, which Neovim manages: run `:Lazy update`, then `:TSUpdate` so the parsers match the updated nvim-treesitter queries.
+- **tree-sitter-cli**, which is pinned: bump `TREE_SITTER_VERSION` in `install` and re-run it.
 
 ## Scripts
 
