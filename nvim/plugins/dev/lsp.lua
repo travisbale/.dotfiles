@@ -109,6 +109,11 @@ return {
             lsp_keymaps(bufnr)
             lsp_highlight_document(client, bufnr)
 
+            -- Let treesitter own Go highlighting; gopls semantic tokens clash with most colorschemes.
+            if client.name == "gopls" then
+                client.server_capabilities.semanticTokensProvider = nil
+            end
+
             if client.server_capabilities.documentFormattingProvider then
                 vim.api.nvim_create_autocmd("BufWritePre", {
                     group = format_augroup,
