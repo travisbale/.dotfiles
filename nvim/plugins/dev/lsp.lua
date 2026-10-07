@@ -82,6 +82,9 @@ return {
 
         local function lsp_keymaps(bufnr)
             local opts = { buffer = bufnr }
+            local function show_float(_, buf)
+                vim.diagnostic.open_float({ bufnr = buf, scope = "cursor", focus = false, border = "rounded" })
+            end
             vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
             vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
             vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
@@ -90,13 +93,13 @@ return {
             vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
             vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
             vim.keymap.set("n", "[d", function()
-                vim.diagnostic.goto_prev({ float = { border = "rounded" } })
+                vim.diagnostic.jump({ count = -1, on_jump = show_float })
             end, opts)
             vim.keymap.set("n", "gl", function()
                 vim.diagnostic.open_float({ border = "rounded", source = true })
             end, opts)
             vim.keymap.set("n", "]d", function()
-                vim.diagnostic.goto_next({ float = { border = "rounded" } })
+                vim.diagnostic.jump({ count = 1, on_jump = show_float })
             end, opts)
             vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
             vim.keymap.set("n", "<C-q>", vim.diagnostic.setqflist, opts)
