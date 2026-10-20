@@ -5,6 +5,8 @@
 [core]
 	editor = nvim
 	autocrlf = input
+[init]
+	defaultBranch = master
 [help]
 	autocorrect = -1
 [rebase]
